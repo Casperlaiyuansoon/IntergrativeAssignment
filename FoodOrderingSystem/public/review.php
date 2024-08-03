@@ -19,7 +19,7 @@
             </div>
 
            <ul>
-                <li><a href="index.php">Home</a></li>
+                <li><a href="hoemapge.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
                 <li><a href="menu.php">Menu</a></li>
                 <li><a href="bookingHistory.php">Booking History</a></li>
@@ -196,6 +196,7 @@
 
 </div>
 
+</body>
 
 
 
@@ -251,8 +252,6 @@
 
     </footer>
 
-
+</html>
 
     
-</body>
-</html>
