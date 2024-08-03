@@ -196,7 +196,6 @@
 
 </div>
 
-</body>
 
 
 
@@ -252,6 +251,8 @@
 
     </footer>
 
-</html>
+
 
     
+</body>
+</html>
