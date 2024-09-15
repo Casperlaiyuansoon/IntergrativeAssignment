@@ -68,5 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $foodImage = $stmt['image'];
         }
     }
+    
 }
 ?>
+
