@@ -1,0 +1,201 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center; /* Center horizontally */
+    vertical-align: middle; /* Center vertically */
+}
+
+table th {
+    background-color: #f4f4f4;
+}
+
+table tr {
+    background-color: #f9f9f9;
+}
+
+table img {
+    width: 50px;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Center image */
+}
+
+
+
+/* Style for the food form container */
+#foodForm {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 20px auto;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* Style for form labels */
+#foodForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Style for form inputs */
+#foodForm input[type="text"],
+#foodForm input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Style for submit button */
+#foodForm input[type="submit"] {
+    background-color: #2a2185;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit button hover effect */
+#foodForm input[type="submit"]:hover {
+    background-color: #1b1770;
+}
+
+/* Adjust input focus state */
+#foodForm input[type="text"]:focus,
+#foodForm input[type="file"]:focus {
+    border-color: #2a2185;
+    box-shadow: 0 0 5px rgba(42, 33, 133, 0.4);
+}
+
+
+/* Style for the edit button */
+.edit-btn {
+    color: #2a2185; /* Blue color */
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect for edit button */
+.edit-btn:hover {
+    color: #1b1770;
+}
+
+/* Style for the delete button */
+.delete-btn {
+    color: #f00; /* Red color */
+    text-decoration: none;
+    font-size: 18px;
+    padding: 5px;
+    transition: color 0.3s ease;
+}
+
+/* Hover effect for delete button */
+.delete-btn:hover {
+    color: #c00;
+}
+
+
+/* Modal Background */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0, 0, 0, 0.5); 
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #f9f9f9; /* Same as #foodForm background */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    margin: 15% auto; 
+    border: 1px solid #888;
+    position: relative;
+    font-family: 'Ubuntu', sans-serif; /* Same font-family */
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+/* Form Labels */
+.modal-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Form Inputs */
+.modal-content input[type="text"],
+.modal-content input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    color: #333;
+    background-color: #fff;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Submit Button */
+.modal-content input[type="submit"] {
+    background-color: #2a2185;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+/* Submit Button Hover Effect */
+.modal-content input[type="submit"]:hover {
+    background-color: #1b1770;
+}
+
+/* Adjust Input Focus State */
+.modal-content input[type="text"]:focus,
+.modal-content input[type="file"]:focus {
+    border-color: #2a2185;
+    box-shadow: 0 0 5px rgba(42, 33, 133, 0.4);
+}
+
