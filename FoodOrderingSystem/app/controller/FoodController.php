@@ -1,6 +1,9 @@
 <?php
 
 require_once '../../models/Food.php';
+require_once '../../observers/Observer.php';
+require_once '../../observers/LoggingObserver.php';
+require_once '../../observers/NotificationObserver.php';
 
 // Create a new database connection
 $database = new Database();
@@ -8,6 +11,13 @@ $db = $database->getConnection();
 
 // Instantiate Food model
 $food = new Food($db);
+
+// Attach observers
+$loggingObserver = new LoggingObserver();
+$notificationObserver = new NotificationObserver();
+$food->addObserver($loggingObserver);
+$food->addObserver($notificationObserver);
+
 
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -70,5 +80,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
 }
-?>
+
+
+
+
 

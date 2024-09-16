@@ -1,9 +1,4 @@
-<?php 
-require_once '../../controller/FoodController.php';
 
-// Fetch all food items
-$foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -122,7 +117,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         </thead>
 
                         <tbody>
-                            <?php foreach ($foodItems as $item): ?>
+
                             <tr>
                                 <td>Aplle Watch</td>
                                 <td>$1200</td>
@@ -133,11 +128,6 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
 
                         </tbody>
                     </table>
-
-
-
-       
-
 
 
         <!-- =============== Scripts =============== -->

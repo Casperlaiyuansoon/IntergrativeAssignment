@@ -4,6 +4,7 @@ require_once '../../config/Database.php';
 
 class Food {
 
+    private $observers = [];
     private $conn;
     private $table = "food_items"; //table name
     
@@ -101,8 +102,8 @@ class Food {
         $stmt->execute();
         return $stmt;
     }
-    
-        // ===========================Search by name=======================================
+
+    // ===========================Search by name=======================================
     public function searchByName($searchTerm) {
         $query = "SELECT * FROM " . $this->table . " WHERE name LIKE :searchTerm";
         $stmt = $this->conn->prepare($query);
@@ -110,10 +111,41 @@ class Food {
         // Bind search term with wildcards for partial matching
         $searchTerm = "%$searchTerm%";
         $stmt->bindParam(':searchTerm', $searchTerm);
-        
+
         $stmt->execute();
         return $stmt;
     }
-    
+
+
+
+    // ===========================observer design pattern=======================================
+    public function addObserver(Observer $observer) {
+        $this->observers[] = $observer;
+    }
+
+    public function removeObserver(Observer $observer) {
+        $this->observers = array_filter($this->observers, function ($obs) use ($observer) {
+            return $obs !== $observer;
+        });
+    }
+
+    public function notifyObservers($foodItem) {
+        foreach ($this->observers as $observer) {
+            $observer->update($foodItem);
+        }
+    }
+
+    // CRUD methods that trigger notifications
+    public function addFood($name, $price, $image) {
+        $this->notifyObservers(['action' => 'add', 'name' => $name, 'price' => $price, 'image' => $image]);
+    }
+
+    public function updateFood($id, $name, $price, $image) {
+        $this->notifyObservers(['action' => 'update', 'id' => $id, 'name' => $name, 'price' => $price, 'image' => $image]);
+    }
+
+    public function deleteFood($id) {
+        $this->notifyObservers(['action' => 'delete', 'id' => $id]);
+    }
 
 }
