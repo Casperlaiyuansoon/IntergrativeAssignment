@@ -40,6 +40,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Failed to upload file.";
             $imagePath = null;
         }
+        
+        // Validate file extension
+        $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+        $fileExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
+
+        if (!in_array($fileExtension, $allowedExtensions)) {
+            die("File extension not allowed");
+        }
+        
+    
     }
 
     // Create or update food item
