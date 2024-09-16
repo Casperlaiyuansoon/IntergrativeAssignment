@@ -58,9 +58,10 @@ class Food implements Subject {
         $query = "INSERT INTO " . $this->table . " (name, price, image) VALUES (:name, :price, :image)";
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':price', $this->price);
-        $stmt->bindParam(':image', $this->image);
+   // Strongly typing input parameters
+    $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);  // Name is a string
+    $stmt->bindParam(':price', $this->price, PDO::PARAM_STR); // Price is stored as string (decimal)
+    $stmt->bindParam(':image', $this->image, PDO::PARAM_STR); // Image name as string
 
 
             if ($stmt->execute()) {
