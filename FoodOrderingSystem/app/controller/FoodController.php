@@ -1,9 +1,9 @@
 <?php
 
 require_once '../../models/Food.php';
-require_once '../../observers/Observer.php';
+require_once '../../config/Database.php';
+require_once '../../observers/EmailNotificationObserver.php';
 require_once '../../observers/LoggingObserver.php';
-require_once '../../observers/NotificationObserver.php';
 
 // Create a new database connection
 $database = new Database();
@@ -12,12 +12,13 @@ $db = $database->getConnection();
 // Instantiate Food model
 $food = new Food($db);
 
-// Attach observers
-$loggingObserver = new LoggingObserver();
-$notificationObserver = new NotificationObserver();
-$food->addObserver($loggingObserver);
-$food->addObserver($notificationObserver);
+// Instantiate observers
+$emailObserver = new EmailNotificationObserver();
+$logObserver = new LoggingObserver();
 
+// Attach observers to food
+$food->attach($emailObserver);
+$food->attach($logObserver);
 
 // Handle form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

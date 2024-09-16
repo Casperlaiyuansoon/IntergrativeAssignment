@@ -1,21 +1,12 @@
 <?php
 
-require_once 'Observer.php';  // Ensure that the Observer interface is included
+require_once 'Observer.php';
 
 class LoggingObserver implements Observer {
 
-    public function update($foodItem) {
-        $logMessage = "[" . date('Y-m-d H:i:s') . "] Action: {$foodItem['action']}, ";
-        
-        // Check if foodItem contains name and other details before logging
-        if (isset($foodItem['name'])) {
-            $logMessage .= "Food: {$foodItem['name']}, Price: {$foodItem['price']}, Image: {$foodItem['image']}\n";
-        } else {
-            $logMessage .= "Food ID: {$foodItem['id']}\n";
-        }
+    public function update($data) {
 
-        // Append the log message to the file 'food_log.txt'
-        file_put_contents(__DIR__ . '/food_log.txt', $logMessage, FILE_APPEND);
+        file_put_contents('food_log.txt', "Food item updated: " . print_r($data, true) . "\n", FILE_APPEND);
     }
 
 }

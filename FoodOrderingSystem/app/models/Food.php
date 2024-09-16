@@ -1,13 +1,14 @@
 <?php
 
 require_once '../../config/Database.php';
+require_once '../../observers/Subject.php';
 
-class Food {
+class Food implements Subject {
 
-    private $observers = [];
     private $conn;
     private $table = "food_items"; //table name
-    
+    private $observers = []; // List of observers
+    private $foodData; // Data to be passed to observers
     public $id;
     public $name;
     public $price;
@@ -62,6 +63,16 @@ class Food {
         $stmt->bindParam(':image', $this->image);
 
         if ($stmt->execute()) {
+            // Prepare the data for observers
+            $this->foodData = [
+                'name' => $this->name,
+                'price' => $this->price,
+                'image' => $this->image
+            ];
+
+            // Notify all observers
+            $this->notify();
+
             return true;
         }
         return false;
@@ -78,9 +89,21 @@ class Food {
         $stmt->bindParam(":id", $this->id);
 
         if ($stmt->execute()) {
-            return true;
+            // Prepare the data for observers
+            $this->foodData = [
+                'name' => $this->name,
+                'price' => $this->price,
+                'image' => $this->image
+            ];
+
+            // Notify all observers
+            $this->notify();
+
+            if ($stmt->execute()) {
+                return true;
+            }
+            return false;
         }
-        return false;
     }
 
     // ===========================Delete food=======================================
@@ -116,36 +139,25 @@ class Food {
         return $stmt;
     }
 
-
-
-    // ===========================observer design pattern=======================================
-    public function addObserver(Observer $observer) {
+    // Attach an observer to the subject
+    public function attach(Observer $observer) {
         $this->observers[] = $observer;
     }
 
-    public function removeObserver(Observer $observer) {
-        $this->observers = array_filter($this->observers, function ($obs) use ($observer) {
-            return $obs !== $observer;
-        });
-    }
-
-    public function notifyObservers($foodItem) {
-        foreach ($this->observers as $observer) {
-            $observer->update($foodItem);
+    // Detach an observer from the subject
+    public function detach(Observer $observer) {
+        foreach ($this->observers as $key => $value) {
+            if ($value === $observer) {
+                unset($this->observers[$key]);
+            }
         }
     }
 
-    // CRUD methods that trigger notifications
-    public function addFood($name, $price, $image) {
-        $this->notifyObservers(['action' => 'add', 'name' => $name, 'price' => $price, 'image' => $image]);
-    }
-
-    public function updateFood($id, $name, $price, $image) {
-        $this->notifyObservers(['action' => 'update', 'id' => $id, 'name' => $name, 'price' => $price, 'image' => $image]);
-    }
-
-    public function deleteFood($id) {
-        $this->notifyObservers(['action' => 'delete', 'id' => $id]);
+    // Notify all observers of the change
+    public function notify() {
+        foreach ($this->observers as $observer) {
+            $observer->update($this->foodData);
+        }
     }
 
 }

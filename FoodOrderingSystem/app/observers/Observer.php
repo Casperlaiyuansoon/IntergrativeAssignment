@@ -1,5 +1,6 @@
 <?php
 
 interface Observer {
-    public function update($foodItem);
+
+    public function update($data);
 }

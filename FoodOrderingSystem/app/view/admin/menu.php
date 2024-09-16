@@ -82,7 +82,7 @@ if ($searchTerm) {
 
                         <div class="menu_info">
                             <h2><?php echo htmlspecialchars($item['name']); ?></h2>
-                            <h3><?php echo htmlspecialchars($item['price']); ?></h3>
+                            <h3>RM<?php echo htmlspecialchars($item['price']); ?></h3>
                             <div class="menu_icon">
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star"></i>
