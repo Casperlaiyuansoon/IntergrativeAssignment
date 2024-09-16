@@ -62,18 +62,9 @@ class Food implements Subject {
         $stmt->bindParam(':price', $this->price);
         $stmt->bindParam(':image', $this->image);
 
-        if ($stmt->execute()) {
-            // Prepare the data for observers
-            $this->foodData = [
-                'name' => $this->name,
-                'price' => $this->price,
-                'image' => $this->image
-            ];
 
-            // Notify all observers
-            $this->notify();
-
-            return true;
+            if ($stmt->execute()) {
+                return true;
         }
         return false;
     }
@@ -88,23 +79,13 @@ class Food implements Subject {
         $stmt->bindParam(":image", $this->image);
         $stmt->bindParam(":id", $this->id);
 
-        if ($stmt->execute()) {
-            // Prepare the data for observers
-            $this->foodData = [
-                'name' => $this->name,
-                'price' => $this->price,
-                'image' => $this->image
-            ];
-
-            // Notify all observers
-            $this->notify();
 
             if ($stmt->execute()) {
                 return true;
             }
             return false;
         }
-    }
+    
 
     // ===========================Delete food=======================================
     public function delete() {
