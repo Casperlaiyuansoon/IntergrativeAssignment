@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<menu>
+    <food>
+        <id>1</id>
+        <name>Pizza</name>
+        <price>20</price>
+        <image>pizza.jpg</image>
+    </food>
+    <food>
+        <id>2</id>
+        <name>Burger</name>
+        <price>10</price>
+        <image>burger.jpg</image>
+    </food>
+    <food>
+        <id>3</id>
+        <name>Pasta</name>
+        <price>15</price>
+        <image>pasta.jpg</image>
+    </food>
+</menu>
+
+
