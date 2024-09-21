@@ -132,7 +132,9 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                                                 <i class="fas fa-edit"></i>
                                             </a>
                                             |
-                                            <a href="?action=delete&id=<?php echo htmlspecialchars($item['id']); ?>" class="delete-btn">
+                                            <!-- <a href="?action=delete&id=<?php echo htmlspecialchars($item['id']); ?>" class="delete-btn">-->
+                                            <a href="?action=delete&id=<?php echo htmlspecialchars($item['id']); ?>" class="delete-btn" onclick="return confirmDelete()">
+
                                                 <i class="fas fa-trash-alt"></i>
                                             </a>
                                         </td>
@@ -227,7 +229,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         } else {
                             row.style.display = "none"; // Hide the row if it doesn't match
                         }
-                    }
+                    }  
                 }
             }
         </script>
@@ -235,3 +237,14 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
 
     </body>
 </html>
+
+
+
+
+
+<script>
+function confirmDelete() {
+   return confirm('Are you sure you want to delete this item?');
+}
+</script>
+

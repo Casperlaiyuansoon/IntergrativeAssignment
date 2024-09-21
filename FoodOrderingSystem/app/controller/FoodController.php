@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $fileExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
 
         if (!in_array($fileExtension, $allowedExtensions)) {
-            die("File extension not allowed");
+            die("Invalid file type. Only JPG, JPEG, and PNG are allowed.");
         }
         
     
@@ -91,6 +91,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     
 }
+
+
 
 
 

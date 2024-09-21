@@ -9,6 +9,7 @@ class Food implements Subject {
     private $table = "food_items"; //table name
     private $observers = []; // List of observers
     private $foodData; // Data to be passed to observers
+    
     public $id;
     public $name;
     public $price;
@@ -58,14 +59,17 @@ class Food implements Subject {
         $query = "INSERT INTO " . $this->table . " (name, price, image) VALUES (:name, :price, :image)";
         $stmt = $this->conn->prepare($query);
 
-   // Strongly typing input parameters
-    $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);  // Name is a string
-    $stmt->bindParam(':price', $this->price, PDO::PARAM_STR); // Price is stored as string (decimal)
-    $stmt->bindParam(':image', $this->image, PDO::PARAM_STR); // Image name as string
+        // Strongly typing input parameters
+        $stmt->bindParam(':name', $this->name, PDO::PARAM_STR);  // Name is a string
+        $stmt->bindParam(':price', $this->price, PDO::PARAM_STR); // Price is stored as string (decimal)
+        $stmt->bindParam(':image', $this->image, PDO::PARAM_STR); // Image name as string
 
 
-            if ($stmt->execute()) {
-                return true;
+        if ($stmt->execute()) {
+            // Notify observers with relevant data
+            //$this->foodData = ['action' => 'create', 'name' => $this->name, 'price' => $this->price];
+            //$this->notify();
+            return true;
         }
         return false;
     }
@@ -80,13 +84,11 @@ class Food implements Subject {
         $stmt->bindParam(":image", $this->image);
         $stmt->bindParam(":id", $this->id);
 
-
-            if ($stmt->execute()) {
-                return true;
-            }
-            return false;
+        if ($stmt->execute()) {
+            return true;
         }
-    
+        return false;
+    }
 
     // ===========================Delete food=======================================
     public function delete() {
