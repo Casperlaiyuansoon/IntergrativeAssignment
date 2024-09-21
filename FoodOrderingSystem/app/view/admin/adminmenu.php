@@ -229,22 +229,20 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         } else {
                             row.style.display = "none"; // Hide the row if it doesn't match
                         }
-                    }  
+                    }
                 }
             }
         </script>
 
+        <script>
+            function confirmDelete() {
+                return confirm('Are you sure you want to delete this item?');
+            }
+        </script>
 
     </body>
 </html>
 
 
 
-
-
-<script>
-function confirmDelete() {
-   return confirm('Are you sure you want to delete this item?');
-}
-</script>
 

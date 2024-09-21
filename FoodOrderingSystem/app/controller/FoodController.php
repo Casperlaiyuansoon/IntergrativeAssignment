@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo "Failed to upload file.";
             $imagePath = null;
         }
-        
+
         // Validate file extension
         $allowedExtensions = ['jpg', 'jpeg', 'png', 'gif'];
         $fileExtension = strtolower(pathinfo($imageName, PATHINFO_EXTENSION));
@@ -48,53 +48,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!in_array($fileExtension, $allowedExtensions)) {
             die("Invalid file type. Only JPG, JPEG, and PNG are allowed.");
         }
-        
-    
     }
 
-    // Create or update food item
+    // Set food properties from the form
     $food->name = $_POST['name'];
     $food->price = $_POST['price'];
     $food->image = $imagePath; // Store the file path
-
+    // Save the food item (create or update)
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $food->id = $_POST['id'];
-        if ($food->update()) {
-            echo "";
-        } else {
-            echo "Failed to update food item.";
-        }
+    }
+
+    if ($food->save()) { // This handles both creation and updating
+        echo "";
     } else {
-        if ($food->create()) {
-            echo "";
-        } else {
-            echo "Failed to create food item.";
-        }
+        echo "Failed to save food item.";
     }
 } elseif (isset($_GET['action'])) {
     if ($_GET['action'] == 'delete') {
         $food->id = $_GET['id'];
-        if ($food->delete()) {
+        if ($food->remove()) {
             echo "";
         } else {
             echo "Failed to delete food item.";
         }
     } elseif ($_GET['action'] == 'edit') {
+        // Edit food item
         $food->id = $_GET['id'];
-        $stmt = $food->read()->fetch(PDO::FETCH_ASSOC);
-        if ($stmt) {
-            $foodId = $stmt['id'];
-            $foodName = $stmt['name'];
-            $foodPrice = $stmt['price'];
-            $foodImage = $stmt['image'];
+        $foodData = $food->findFood($food->id);
+
+        if ($foodData) {
+            $foodId = $foodData['id'];
+            $foodName = $foodData['name'];
+            $foodPrice = $foodData['price'];
+            $foodImage = $foodData['image'];
         }
     }
-    
 }
-
-
-
-
-
-
-
