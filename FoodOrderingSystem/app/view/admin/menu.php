@@ -49,7 +49,6 @@ if ($searchTerm) {
             </ul>
 
             <div class="icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
                 <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
                 <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
             </div>
