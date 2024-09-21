@@ -159,15 +159,15 @@ class Food extends BaseModel implements Subject {
 //        return $stmt;
 //    }
     // ===========================Search by name=======================================
-//    public function searchByName($searchTerm) {
-//        $query = "SELECT * FROM " . $this->table . " WHERE name LIKE :searchTerm";
-//        $stmt = $this->conn->prepare($query);
-//
-//        // Bind search term with wildcards for partial matching
-//        $searchTerm = "%$searchTerm%";
-//        $stmt->bindParam(':searchTerm', $searchTerm);
-//
-//        $stmt->execute();
-//        return $stmt;
-//    }
+    public function searchByName($searchTerm) {
+        $query = "SELECT * FROM " . $this->table . " WHERE name LIKE :searchTerm";
+        $stmt = $this->conn->prepare($query);
+
+        // Bind search term with wildcards for partial matching
+        $searchTerm = "%$searchTerm%";
+        $stmt->bindParam(':searchTerm', $searchTerm);
+
+        $stmt->execute();
+        return $stmt;
+    }
 }
