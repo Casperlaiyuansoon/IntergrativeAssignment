@@ -14,7 +14,7 @@ session_start();
 
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
-$_SESSION['email'] = "zy@gmail.com";
+//$_SESSION['email'] = "zy@gmail.com";
 
 $getEmail = $_SESSION['email'];
 $product = new Product($id = "", $product = "", $image = "", $price = "", $description = "");

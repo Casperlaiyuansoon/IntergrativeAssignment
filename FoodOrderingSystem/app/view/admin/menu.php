@@ -50,7 +50,7 @@ if ($searchTerm) {
 
                 <div class="icon">
                     <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
-                    <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="../../view/AddToCartView.php"><i class="fa-solid fa-cart-shopping"></i></a>
                 </div>
             </nav>
         </section>
