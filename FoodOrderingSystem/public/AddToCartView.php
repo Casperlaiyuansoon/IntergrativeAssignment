@@ -144,7 +144,7 @@ else{
 
     </tbody>
 
-        <button type="button" class="btn close"><a href="menu.php" >Close</a></button></br></br>
+        <button type="button" class="btn close"><a href="/FoodOrderingSystem/app/view/admin/menu.php" >Close</a></button></br></br>
         </form> 
 
     </div>
