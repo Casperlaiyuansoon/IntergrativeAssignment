@@ -113,7 +113,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="tag">
                     <span>New User?</span>
-                    <a href="signup.php">Sign Up</a>
+                    <a href="../xmlandxslt/signup.php">Sign Up</a>
                 </div>
                 <div class="tag" style="text-align:center; font-weight:bold; background-color:grey;">
                     <span>Admin?</span>

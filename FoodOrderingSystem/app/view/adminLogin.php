@@ -93,7 +93,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form class="input_box" method="POST" action="">
                 <input type="text" name="usernameAdmin" class="field" placeholder="User Name"
                     value="<?php echo htmlspecialchars($_POST['usernameAdmin'] ?? '', ENT_QUOTES); ?>">
-                <input type="password" name="passwordAdmin" class="field" maxlength="10" placeholder="Password">
+                <input type="password" name="passwordAdmin" class="field" autocomplete="off" placeholder="Password">
                 <input type="checkbox" class="check_box">
                 <p>Remember Password</p>
                 <button type="submit" class="submit_btn">Login</button>
