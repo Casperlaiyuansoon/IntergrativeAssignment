@@ -1,6 +1,7 @@
 <?php 
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Payment.php";
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Order.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/VoucherModel.php";
 require_once "PaymentFactory.php";
 require "DBConfig.php";
 
@@ -145,6 +146,36 @@ if(isset($_POST['payment-checkout'])){
     $payment = PaymentFactory::createPayment($payment->setPayment($totalAmount, $paymentAmount, $paymentGateway, $paymentDateTime), "Insert");
     
     header("location: /FoodOrderingSystem/app/view/PaymentGatewayView.php?amount=". $paymentAmount ."&gateway=". $paymentGateway ."&time=". $paymentDateTime);
+
+    //$order = PaymentFactory::createPayment($order->setOrderAmount($totalAmount), "Update");
+
+}
+
+function getVoucherAmount($code, $amount){
+
+    require "DBConfig.php";
+
+    $query = "SELECT * FROM VOUCHERS WHERE code = '$code'";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+
+    while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+        $amount = $row['DISCOUNT_PERCENTAGE'];
+    }
+
+    return $amount;
+
+}
+
+if(isset($_POST['post-voucher'])){
+
+    $voucherCode = $_POST['promoCode'];
+
+    $a = 0;
+    $va = getVoucherAmount($voucherCode, $a);
+    
+    header("location: /FoodOrderingSystem/app/view/PaymentView.php");
 
     //$order = PaymentFactory::createPayment($order->setOrderAmount($totalAmount), "Update");
 

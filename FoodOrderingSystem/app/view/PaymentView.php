@@ -2,6 +2,7 @@
 
 <?php
 require "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.php";
 ?>
 
 <style>
@@ -341,7 +342,7 @@ require "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.php";
                             <h3>
                                 Apply Voucher Code: </br>
                                 <input type="text" id="voucher" name="promoCode" />
-                                <button type="submit" class="b-voucher" >Apply Code</button>
+                                <button type="submit" class="b-voucher" name="post-voucher" >Apply Code</button>
                             </h3>
 
                             <h3>Total:</h3>
@@ -423,7 +424,7 @@ require "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.php";
 
             var subTotalValue = <?= $displaySubTotal ?>;
             var charge = 0.05;
-            var voucherValue = 3.00;
+            var voucherValue = 0.00;
             var totalValue = subTotalValue + (subTotalValue * charge) - voucherValue;
 
             const subTotal = document.querySelector('.subtotal');

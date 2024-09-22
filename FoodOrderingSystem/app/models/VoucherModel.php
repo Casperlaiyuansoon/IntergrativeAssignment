@@ -1,5 +1,5 @@
 <?php
-include_once 'BaseModel.php'; // Ensure BaseModel is included
+include_once 'BaseModel_roger.php'; // Ensure BaseModel is included
 
 class VoucherModel extends BaseModel {
     protected $table = 'vouchers'; // Set the table name
@@ -9,6 +9,22 @@ class VoucherModel extends BaseModel {
     public function createVoucher($data) {
         // Use save method from BaseModel to handle insert
         return $this->save($data); 
+    }
+
+    public function getVoucherAmount($code){
+
+        $query = "SELECT * FROM {$this->table} WHERE code = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("s", $code);
+        $stmt->execute();
+
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+
+            $amount = $row['DISCOUNT_PERCENTAGE'];
+        }
+
+        return $amount;
+
     }
 
     // Fetch voucher details by voucher code

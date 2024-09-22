@@ -1,5 +1,5 @@
 <?php 
-require "C:/xampp/htdocs/FoodOrderingSystem/app/model/Cart.php";
+require "C:/xampp/htdocs/FoodOrderingSystem/app/models/Cart.php";
 
 class Order extends Cart{
     private $orderItemID;
