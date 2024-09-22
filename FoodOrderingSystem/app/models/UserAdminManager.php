@@ -1,5 +1,5 @@
 <?php
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../proxy/UserActions.php';
 
 class UserAdminManager implements UserActions

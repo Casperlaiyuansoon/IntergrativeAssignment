@@ -36,9 +36,9 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="../../view/user.php">
                             <span class="icon"><ion-icon name="people-outline"></ion-icon></span>
-                            <span class="title">Customers</span>
+                            <span class="title">User</span>
                         </a>
                     </li>
                     <li>
@@ -54,7 +54,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="../../controller/adminLogout.php">
                             <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
                             <span class="title">Sign Out</span>
                         </a>

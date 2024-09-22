@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start the session
 
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../models/UserAdminManager.php';
 
 // Define the checkSessionTimeout function
@@ -62,13 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul>
                 <li>
                     <a href="#">
-                        <span class="icon"><ion-icon name="logo-apple"></ion-icon></span>
+                        <span class="icon"><ion-icon name="../../public/image/logo.png"></ion-icon></span>
                         <span class="title">Food Ordeing Dashbroad</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="adminmenu.php">
+                    <a href="#">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">Dashbroad</span>
                     </a>
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="admin/adminmenu.php">
                         <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
                         <span class="title">Menu</span>
                     </a>
@@ -91,24 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li>
                     <a href="#">
                         <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
-                        <span class="title">Help</span>
+                        <span class="title">Order</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="settings-outline"></ion-icon></span>
-                        <span class="title">Setting</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                        <span class="title">Password</span>
-                    </a>
-                </li>
-
                 <li>
                     <a href="../controller/adminLogout.php">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
