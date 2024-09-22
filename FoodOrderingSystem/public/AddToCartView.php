@@ -106,7 +106,7 @@ else{
 ?>
         <tr>
             <td>
-                <img src="/FoodOrderingSystem/app/Public/image/<?= $cart->getImage() ?>" alt="productImage" />
+                <img src="<?= $cart->getImage() ?>" alt="productImage" />
             </td>
 
             <td>
