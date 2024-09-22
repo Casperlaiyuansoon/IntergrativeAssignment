@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     // Set session variables
                     $_SESSION['user_id'] = $user->user_id;
                     $_SESSION['username'] = $user->username;
+                    $_SESSION['email'] = $user->email;
                     $_SESSION['login_time'] = time();
 
                     // Redirect to homepage
