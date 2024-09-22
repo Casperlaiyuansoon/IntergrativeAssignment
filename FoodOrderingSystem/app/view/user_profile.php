@@ -2,7 +2,7 @@
 // Start session and check if user is logged in
 session_start();
 
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../models/userProfileModal.php';
 
 $database = new Database();

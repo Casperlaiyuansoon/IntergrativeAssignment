@@ -1,5 +1,5 @@
 <?php
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../models/signupModal.php';
 
 $errors = [];
@@ -92,7 +92,7 @@ if ($proc->importStylesheet($xsl)) {
 }
 ?>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
