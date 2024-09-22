@@ -1,18 +1,26 @@
 <?php 
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Product.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/controller/CartItemFactory.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
 //require_once "C:/xampp/htdocs/AssignmentFOS/MVC/Controller/CartItemfactory.php";
-require "DBConfig.php";
+//require "DBConfig.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
 
 //Initiate Session
 session_start();
 
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
+$_SESSION['email'] = "zy@gmail.com";
+
 $getEmail = $_SESSION['email'];
 $product = new Product($id = "", $product = "", $image = "", $price = "", $description = "");
 
 //Display Cart Data
-$sql = "SELECT CM.USEREMAIL, C.CARTID, P.ID, P.PRODUCTNAME, P.IMAGE, C.CARTPRICE, C.CARTQUANTITY FROM CART CM, CARTITEM C, PRODUCT P WHERE P.ID = C.PRODUCTID AND CM.USEREMAIL = '$getEmail' AND C.CARTID = CM.CARTID";
+$sql = "SELECT CM.USEREMAIL, C.CARTID, F.ID, F.NAME, F.IMAGE, C.CARTPRICE, C.CARTQUANTITY FROM CART CM, CARTITEM C, FOOD_ITEMS F WHERE F.ID = C.PRODUCTID AND CM.USEREMAIL = '$getEmail' AND C.CARTID = CM.CARTID";
 $result = $db->query($sql);
 $result->execute();
 
@@ -21,7 +29,7 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
     $cartEmail = $row['USEREMAIL'];
     $cart = $row['CARTID'];
     $product = $row['ID'];
-    $name = $row['PRODUCTNAME'];
+    $name = $row['NAME'];
     $image = $row['IMAGE'];
     $price = $row['CARTPRICE'];
     $quantity = $row['CARTQUANTITY'];
@@ -29,9 +37,83 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
     $CartArr[] = new Cart($cart, $product, $name, $image, $price, $quantity);
 
     //echo "<p>". $row['CARTID'], $row['PRODUCTNAME'], $row['IMAGE'], $row['CARTPRICE'] ."</p>";
-}   
+}  
 
-//$cartFactory = new CartItemFactory();
+if((isset($_POST['AddToCart']))){
+
+    $productID = $_POST['ProductID'];
+    $price = $_POST['ProductPrice'];
+    //$quantity = 1;
+
+    //$cart = CartItemFactory::createCart($product->productInsert($productID, $price), "Insert");
+    insertItem($productID, $price);
+}
+
+function insertItem(/*Product $product*/$productID, $price){
+
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+    
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnection();
+
+    $getEmail = $_SESSION['email'];
+
+    $sql1 = "SELECT CARTID, USEREMAIL FROM CART WHERE USEREMAIL = '$getEmail'";
+    $result1 = $db->query($sql1);
+    $result1->execute();
+
+    $dataRow = $result1->rowCount();
+
+    if($dataRow == 0){
+
+        $sql2 = "INSERT INTO CART(USEREMAIL) VALUES (?)";
+        $result2 = $db->prepare($sql2);
+        $result2->bindParam(1, $getEmail);
+
+        $result2->execute();
+
+        $sql1 = "SELECT CARTID, USEREMAIL FROM CART WHERE USEREMAIL = '$getEmail'";
+        $result1 = $db->query($sql1);
+        $result1->execute();
+
+        while($row = $result1->fetch(PDO::FETCH_ASSOC)){
+
+            $cartID = $row['CARTID'];
+            $quantity = 1;
+
+            $sql1 = "INSERT INTO CARTITEM(CARTID, PRODUCTID, CARTPRICE, CARTQUANTITY) VALUES (?, ?, ?, ?)";
+            $statement = $db->prepare($sql1);
+            $statement->bindParam(1, $cartID);
+            $statement->bindParam(2, /*$product->getId()*/$productID);
+            $statement->bindParam(3, /*$product->getPrice()*/$price);
+            $statement->bindParam(4, $quantity); 
+    
+            $statement->execute();
+            
+        }
+        header("location: /FoodOrderingSystem/Public/AddToCartView.php");
+
+    }
+
+    else{
+        while($row = $result1->fetch(PDO::FETCH_ASSOC)){
+
+            $cartID = $row['CARTID'];
+            $quantity = 1;
+            
+            $sql1 = "INSERT INTO CARTITEM(CARTID, PRODUCTID, CARTPRICE, CARTQUANTITY) VALUES (?, ?, ?, ?)";
+            $statement = $db->prepare($sql1);
+            $statement->bindParam(1, $cartID);
+            $statement->bindParam(2, /*$product->getId()*/$productID);
+            $statement->bindParam(3, /*$product->getPrice()*/$price);
+            $statement->bindParam(4, $quantity); 
+    
+            $statement->execute();
+        }
+    }
+    header("location: /FoodOrderingSystem/Public/AddToCartView.php");
+}
 
 if(isset($_GET['deleteID'])){
 
@@ -57,7 +139,11 @@ elseif(isset($_POST['clearcart'])){
 
 function displayCartUser(){
     
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+    
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnection();
 
     $getEmail = $_SESSION['email'];
 
@@ -70,7 +156,11 @@ function displayCartUser(){
 
 function displayCartItem(){
     
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+    
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnection();
 
     $getEmail = $_SESSION['email'];
 
@@ -95,9 +185,13 @@ function displayCartItem(){
 
 function clearCart($getEmail, $getCart){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+    
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnection();
 
-    $getEmail = $_SESSION['email'];
+    //$getEmail = $_SESSION['email'];
     
     $sql1 = "DELETE FROM CART WHERE USEREMAIL = '$getEmail'";
     $sql2 = "DELETE FROM CARTITEM WHERE CARTID = '$getCart'";
@@ -111,7 +205,11 @@ function clearCart($getEmail, $getCart){
 
 function deleteItem($getProductId){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+    
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnection();
     
     $cartData = displayCartUser();
     foreach($cartData as $c){
@@ -130,7 +228,11 @@ function deleteItem($getProductId){
 
 function insertOrder(){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+    
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnection();
 
     $cartEmail = $_SESSION['email'];
     

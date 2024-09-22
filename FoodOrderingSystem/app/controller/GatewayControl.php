@@ -1,7 +1,11 @@
 <?php 
 require_once "PaymentFactory.php";
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Payment.php";
-require "DBConfig.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
 
 $order = new Order($orderItemID = "", $orderID = "", $productName = "", $orderAmount = "", $orderQuantity = "", $orderTime = "");
 $payment = new Payment($paymentID = "", $email = "", $totalAmount = "", $paymentAmount = "", $paymentGateway = "", $paymentDateTime = "");
