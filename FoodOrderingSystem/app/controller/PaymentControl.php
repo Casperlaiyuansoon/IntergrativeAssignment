@@ -1,6 +1,6 @@
 <?php 
-require_once "C:/xampp/htdocs/FoodOrderingSystem/app/model/Payment.php";
-require_once "C:/xampp/htdocs/FoodOrderingSystem/app/model/Order.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Payment.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Order.php";
 require_once "PaymentFactory.php";
 require "DBConfig.php";
 

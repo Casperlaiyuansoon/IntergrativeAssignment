@@ -1,6 +1,6 @@
 <?php 
 require_once "PaymentFactory.php";
-require_once "C:/xampp/htdocs/FoodOrderingSystem/app/model/Payment.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Payment.php";
 require "DBConfig.php";
 
 $order = new Order($orderItemID = "", $orderID = "", $productName = "", $orderAmount = "", $orderQuantity = "", $orderTime = "");
