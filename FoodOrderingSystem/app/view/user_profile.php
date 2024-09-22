@@ -2,7 +2,7 @@
 session_start();
 
 // Include database connection
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../models/userProfileModal.php';
 
 // Create a new Database instance and get the connection
