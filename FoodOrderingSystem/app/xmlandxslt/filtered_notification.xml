@@ -1,0 +1,2 @@
+<?xml version="1.0"?>
+<notifications><notification><id>67</id><customer_id>1</customer_id><promotion_id>31</promotion_id><message>123213123</message><status>pending</status><created_at>2024-09-22 09:43:52</created_at></notification><notification><id>68</id><customer_id>2</customer_id><promotion_id>31</promotion_id><message>123123213</message><status>pending</status><created_at>2024-09-22 09:43:57</created_at></notification></notifications>

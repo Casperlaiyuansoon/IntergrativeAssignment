@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<promotions>
+    <promotion>
+        <id>1</id>
+        <title>Summer Sale</title>
+        <description>50% off all items</description>
+        <discount_percentage>50</discount_percentage>
+        <start_date>2024-06-01</start_date>
+        <end_date>2024-06-30</end_date>
+    </promotion>
+    <promotion>
+        <id>2</id>
+        <title>Winter Discount</title>
+        <description>30% off on selected items</description>
+        <discount_percentage>30</discount_percentage>
+        <start_date>2024-12-01</start_date>
+        <end_date>2024-12-31</end_date>
+    </promotion>
+</promotions>

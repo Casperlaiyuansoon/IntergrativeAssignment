@@ -1,0 +1,30 @@
+<?php
+$xmlFile = '../xml/notification.xml';  // Adjust the path as necessary
+
+// Load XML file
+$xml = new DOMDocument;
+if (!$xml->load($xmlFile)) {
+    die("Failed to load XML file.");
+}
+
+// Create a new DOMXPath object
+$xpath = new DOMXPath($xml);
+
+// Query for notifications with 'active' status
+$query = '//notification[status="sent"]';
+$entries = $xpath->query($query);
+
+if ($entries->length > 0) {
+    echo "<h2>Active Notifications</h2>";
+    echo "<ul>";
+    foreach ($entries as $entry) {
+        // Ensure we are getting the text content from the nodes
+        $id = $xpath->evaluate('string(id)', $entry);
+        $message = $xpath->evaluate('string(message)', $entry);
+        echo "<li>ID: $id - Message: $message</li>";
+    }
+    echo "</ul>";
+} else {
+    echo "No active notifications found.";
+}
+?>
