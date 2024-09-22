@@ -130,7 +130,7 @@ checkSessionTimeout();
 
         </div>
 
-        <a href="menu.php" class="about_btn">Order Now</a>
+        <a href="admin/menu.php" class="about_btn">Order Now</a>
 
     </div>
 
