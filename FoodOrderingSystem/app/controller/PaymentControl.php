@@ -3,7 +3,11 @@ require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Payment.php";
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Order.php";
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/VoucherModel.php";
 require_once "PaymentFactory.php";
-require "DBConfig.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
 
 date_default_timezone_set("Asia/Kuala_Lumpur");
 
@@ -15,7 +19,7 @@ session_start();
 $email = $_SESSION['email'];
 
 //Display Order Data
-$sql = "SELECT O.ORDERID, O.ORDERITEMID, O.ORDERPRICE, O.ORDERQUANTITY, O.ORDERCREATION, O.PRODUCTID, P.ID, P.PRODUCTNAME FROM ORDERMAIN OM, ORDERITEM O, PRODUCT P WHERE O.PRODUCTID = P.ID AND OM.USEREMAIL = '$email' AND O.ORDERID = OM.ORDERID AND OM.ORDERSTATUS IS NULL";
+$sql = "SELECT O.ORDERID, O.ORDERITEMID, O.ORDERPRICE, O.ORDERQUANTITY, O.ORDERCREATION, O.PRODUCTID, F.ID, F.NAME FROM ORDERMAIN OM, ORDERITEM O, FOOD_ITEMS F WHERE O.PRODUCTID = F.ID AND OM.USEREMAIL = '$email' AND O.ORDERID = OM.ORDERID AND OM.ORDERSTATUS IS NULL";
 $result = $db->query($sql);
 $result->execute();
 
@@ -23,7 +27,7 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
 
     $orderItemID = $row['ORDERITEMID'];
     $orderID = $row['ORDERID'];
-    $productName = $row['PRODUCTNAME'];
+    $productName = $row['NAME'];
     $orderPrice = $row['ORDERPRICE'];
     $orderQuantity = $row['ORDERQUANTITY'];
     $orderTime = $row['ORDERCREATION'];
@@ -36,7 +40,11 @@ while($row = $result->fetch(PDO::FETCH_ASSOC)){
 
 function displayOrder(){
     
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+    $database = new Database();
+    // Get the database connection
+    $db = $database->getConnection();
 
     $email = $_SESSION['email'];
 
@@ -54,7 +62,11 @@ function displayOrder(){
 $subTotal = 0;
 function subTotalCalculate($subTotal){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
 
     $orderID =  displayOrder();
 
@@ -72,7 +84,11 @@ function subTotalCalculate($subTotal){
 
 function displayPaymentReceipt(){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
 
     $email = $_SESSION['email'];
     //$email = "zhen@gmail.com";
@@ -97,7 +113,12 @@ function displayPaymentReceipt(){
 
 function updateOrder($orderAmount){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
+
     $orderStatus = "SUCCESS";
 
     $orderID =  displayOrder();
@@ -113,7 +134,11 @@ function updateOrder($orderAmount){
 
 function insertPayment(Payment $payment){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
 
     $email = $_SESSION['email'];
 
@@ -153,7 +178,11 @@ if(isset($_POST['payment-checkout'])){
 
 function getVoucherAmount($code, $amount){
 
-    require "DBConfig.php";
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
 
     $query = "SELECT * FROM VOUCHERS WHERE code = '$code'";
     $stmt = $db->prepare($query);
