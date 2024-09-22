@@ -259,7 +259,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class='payment-button'>
-                    <button type='button' class='b1' ><a href='/FoodOrderingSystem/Public/homepage.php'>Payment Completed</a></button></br>
+                    <button type='button' class='b1' ><a href='/FoodOrderingSystem/public/homepage.php'>Payment Completed</a></button></br>
                     <!-- <button type='submit' class='b1' name='generate' >Download Receipt</button></br> -->
                     </div>
 

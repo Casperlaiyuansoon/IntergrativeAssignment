@@ -362,7 +362,7 @@ require_once "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.p
 
                     <div class="payment-button">
                         <button type="submit" class="b1" name="payment-checkout">Payment Checkout</button></br>
-                        <button type="submit" class="b2" name="payment-delete"><a href="/FoodOrderingSystem/Public/homepage.php">Payment Cancel</a></button></a>
+                        <button type="submit" class="b2" name="payment-delete"><a href="/FoodOrderingSystem/public/homepage.php">Payment Cancel</a></button></a>
                     </div>
                 </div>
                         </form>
