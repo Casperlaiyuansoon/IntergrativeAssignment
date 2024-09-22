@@ -1,14 +1,14 @@
 <?php
+// Start session and check if user is logged in
 session_start();
 
-// Include database connection
 include_once '../config/userdatabase.php';
 include_once '../models/userProfileModal.php';
 
-// Create a new Database instance and get the connection
 $database = new Database();
 $conn = $database->getConnection();
 
+// Redirect to login if user is not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
@@ -60,9 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['change_password'])) {
         }
     }
 }
-
-$conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">

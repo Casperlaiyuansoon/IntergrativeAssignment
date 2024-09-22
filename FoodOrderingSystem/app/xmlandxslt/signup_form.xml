@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form>
+    <field>
+        <name>username</name>
+        <label>Username</label>
+        <type>text</type>
+        <placeholder>Username</placeholder>
+    </field>
+    <field>
+        <name>email</name>
+        <label>Email</label>
+        <type>email</type>
+        <placeholder>Email</placeholder>
+    </field>
+    <field>
+        <name>phone_number</name>
+        <label>Phone Number</label>
+        <type>text</type>
+        <placeholder>Phone Number</placeholder>
+    </field>
+    <field>
+        <name>password</name>
+        <label>Password</label>
+        <type>password</type>
+        <placeholder>Password</placeholder>
+    </field>
+    <field>
+        <name>confirmpassword</name>
+        <label>Confirm Password</label>
+        <type>password</type>
+        <placeholder>Confirm Password</placeholder>
+    </field>
+</form> 
