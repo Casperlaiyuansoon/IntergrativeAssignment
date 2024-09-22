@@ -1,5 +1,5 @@
 <?php 
-require_once "C:/xampp/htdocs/FoodOrderingSystem/app/model/Product.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Product.php";
 //require_once "C:/xampp/htdocs/AssignmentFOS/MVC/Controller/CartItemfactory.php";
 require "DBConfig.php";
 

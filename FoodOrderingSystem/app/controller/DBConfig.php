@@ -1,5 +1,5 @@
 <?php 
-require_once "C:/xampp/htdocs/FoodOrderingSystem/app/model/Cart.php";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Cart.php";
 
 //Sample Database Connectionn by Tee Zhen Yu
 $dbHost = "localhost";
