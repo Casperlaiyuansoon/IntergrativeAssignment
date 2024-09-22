@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../proxy/UserProxy.php';
 
 // Get user role from session

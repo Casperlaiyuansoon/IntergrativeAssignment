@@ -1,7 +1,7 @@
 <?php
 session_start(); // Start the session
 
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../model/UserAdminManager.php';
 
 // Define the checkSessionTimeout function

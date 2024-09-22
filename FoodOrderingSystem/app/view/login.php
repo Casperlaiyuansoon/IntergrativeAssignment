@@ -2,7 +2,7 @@
 session_start();
 
 // Include database and User model
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../models/loginModal.php';
 
 // Connect to database
