@@ -54,11 +54,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $food->name = $_POST['name'];
     $food->price = $_POST['price'];
     $food->image = $imagePath; // Store the file path
+    //
     // Save the food item (create or update)
     if (isset($_POST['id']) && !empty($_POST['id'])) {
         $food->id = $_POST['id'];
     }
-
     if ($food->save()) { // This handles both creation and updating
         echo "";
     } else {

@@ -15,7 +15,7 @@ function checkSessionTimeout()
     $_SESSION['LAST_ACTIVITY'] = time(); // Update last activity time
 }
 
-// Check if the user is logged in
+//// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     echo "<p>You are not logged in. Please log in to access more features.</p>";
 }
@@ -44,7 +44,7 @@ checkSessionTimeout();
         <nav>
             <div class="logo">
                 <a href="homepage.php">
-                    <img src="image/logo.png">
+                    <img src="../../public/image/logo.png" alt="">
                 </a>
             </div>
 
@@ -58,7 +58,6 @@ checkSessionTimeout();
             </ul>
 
             <div class="icon">
-                <i class="fa-solid fa-magnifying-glass"></i>
                 <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
                 <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
                 <a href="user_profile.php" id="profile-link"><i class="fa-solid fa-user"></i></a>
@@ -85,7 +84,7 @@ checkSessionTimeout();
             </div>
 
             <div class="main_image">
-                <img src="image/main_img.png">
+                <img src="../../public/image/main_img.png" alt="">
             </div>
 
         </div>
@@ -99,7 +98,7 @@ checkSessionTimeout();
         </p>
 
         <div class="main_btn">
-            <a href="menu.php">Order Now</a>
+            <a href="admin/menu.php">Order Now</a>
             <i class="fa-solid fa-angle-right"></i>
         </div>
 
@@ -113,7 +112,7 @@ checkSessionTimeout();
         <div class="about_main">
 
             <div class="image">
-                <img src="image/Food-Plate.png">
+                <img src="../../public/image/Food-Plate.png">
             </div>
 
             <div class="about_text">
@@ -143,7 +142,7 @@ checkSessionTimeout();
 
         <div class="gallary_image_box">
             <div class="gallary_image">
-                <img src="image/gallary_1.jpg">
+                <img src="../../public/image/gallary_1.jpg" alt="">
 
                 <h3>Food</h3>
                 <p>
@@ -153,7 +152,7 @@ checkSessionTimeout();
             </div>
 
             <div class="gallary_image">
-                <img src="image/gallary_2.jpg">
+                <img src="../../public/image/gallary_2.jpg" alt="">
 
                 <h3>Food</h3>
                 <p>
@@ -163,7 +162,7 @@ checkSessionTimeout();
             </div>
 
             <div class="gallary_image">
-                <img src="image/gallary_3.jpg">
+                <img src="../../public/image/gallary_3.jpg" alt="">
 
                 <h3>Food</h3>
                 <p>
@@ -173,7 +172,7 @@ checkSessionTimeout();
             </div>
 
             <div class="gallary_image">
-                <img src="image/gallary_4.jpg">
+                <img src="../../public/image/gallary_4.jpg" alt="">
 
                 <h3>Food</h3>
                 <p>
@@ -183,7 +182,7 @@ checkSessionTimeout();
             </div>
 
             <div class="gallary_image">
-                <img src="image/gallary_5.jpg">
+                <img src="../../public/image/gallary_5.jpg"  alt="">
 
                 <h3>Food</h3>
                 <p>
@@ -193,7 +192,7 @@ checkSessionTimeout();
             </div>
 
             <div class="gallary_image">
-                <img src="image/gallary_6.jpg">
+                <img src="../../public/image/gallary_6.jpg" alt="">
 
                 <h3>Food</h3>
                 <p>
