@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once '../model/UserAdminManager.php';
+include_once '../models/UserAdminManager.php';
 include_once '../proxy/UserProxy.php';
 
 // Get user role from session

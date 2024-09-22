@@ -1,8 +1,8 @@
 <?php
 session_start();
-include_once '../config/userdatabase.php';
+include_once '../config/Database.php';
 include_once '../proxy/UserProxy.php';
-include_once '../model/UserAdminManager.php';
+include_once '../models/UserAdminManager.php';
 
 // Get user role from session
 $role = isset($_SESSION['role']) ? $_SESSION['role'] : '';
