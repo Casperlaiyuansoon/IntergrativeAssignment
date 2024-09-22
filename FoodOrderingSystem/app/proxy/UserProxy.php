@@ -1,6 +1,6 @@
 <?php
 include_once '../proxy/UserActions.php';
-include_once '../model/UserAdminManager.php';
+include_once '../models/UserAdminManager.php';
 class UserProxy implements UserActions
 {
     private $userAdminManager;
