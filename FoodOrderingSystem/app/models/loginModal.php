@@ -1,5 +1,5 @@
 <?php
-class User { 
+class User {
     private $conn;
     private $table_name = "user";
 
@@ -7,26 +7,33 @@ class User {
     public $username;
     public $password;
     public $status;
+    public $email;
 
     // Constructor with Database Connection
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Find user by username
+    // Find user by username using PDO
     public function findByUsername($username) {
-        $query = "SELECT user_id, username, password, status FROM " . $this->table_name . " WHERE username = ?";
+        $query = "SELECT user_id, username, password, status, email FROM " . $this->table_name . " WHERE username = :username";
+        
+        // Prepare the SQL statement
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("s", $username);
+        
+        // Bind the username to the query
+        $stmt->bindValue(':username', $username);
+        
+        // Execute the query
         $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
+        
+        // Fetch the result as an associative array
+        if ($user = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $this->user_id = $user['user_id'];
             $this->username = $user['username'];
             $this->password = $user['password'];
             $this->status = $user['status'];
+            $this->email = $user['email'];
             return true;
         }
         return false;
