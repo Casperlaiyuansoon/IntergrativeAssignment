@@ -40,12 +40,12 @@ if ($searchTerm) {
             </div>
 
             <ul>
-                <li><a href="homepage.php">Home</a></li>
-                <li><a href="about.php">About</a></li>
+                <li><a href="../homepage.php">Home</a></li>
+                <li><a href="../about.php">About</a></li>
                 <li><a href="menu.php">Menu</a></li>
-                <li><a href="bookingHistory.php">Booking History</a></li>
-                <li><a href="review.php">Review</a></li>
-                <li><a href="contactUs.php">Contact Us</a></li>
+                <li><a href="../OrderHistory.php">Order History</a></li>
+                <li><a href="../review.php">Review</a></li>
+                <li><a href="../contactUs.php">Contact Us</a></li>
             </ul>
 
             <div class="icon">

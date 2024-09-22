@@ -15,10 +15,10 @@ function checkSessionTimeout()
     $_SESSION['LAST_ACTIVITY'] = time(); // Update last activity time
 }
 
-//// Check if the user is logged in
-if (!isset($_SESSION['user_id'])) {
-    echo "<p>You are not logged in. Please log in to access more features.</p>";
-}
+////// Check if the user is logged in
+//if (!isset($_SESSION['user_id'])) {
+//    echo "<p>You are not logged in. Please log in to access more features.</p>";
+//}
 
 // Check if the session has timed out
 checkSessionTimeout();
@@ -51,8 +51,8 @@ checkSessionTimeout();
             <ul>
                 <li><a href="homepage.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="bookingHistory.php">Booking History</a></li>
+                <li><a href="admin/menu.php">Menu</a></li>
+                <li><a href="OrderHistory.php">Order History</a></li>
                 <li><a href="review.php">Review</a></li>
                 <li><a href="contactUs.php">Contact Us</a></li>
             </ul>

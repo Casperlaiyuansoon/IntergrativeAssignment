@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Food Website</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="../../public/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>    
@@ -14,15 +14,15 @@
         <nav>
             <div class="logo">
                 <a href="homepage.html">
-                <img src="image/logo.png">
+                <img src="../../public/image/logo.png">
                 </a>
             </div>
             
            <ul>
                 <li><a href="homepage.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="menu.php">Menu</a></li>
-                <li><a href="bookingHistory.php">Booking History</a></li>
+                <li><a href="admin/menu.php">Menu</a></li>
+                <li><a href="OrderHistory.php">Booking History</a></li>
                 <li><a href="review.php">Review</a></li>
                 <li><a href="contactUs.php">Contact Us</a></li>
             </ul>
@@ -46,7 +46,7 @@
 
         <div class="team_box">
             <div class="profile">
-                <img src="image/chef1.png">
+                <img src="../../public/image/chef1.png">
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
@@ -63,7 +63,7 @@
             </div>
 
             <div class="profile">
-                <img src="image/chef2.png">
+                <img src="../../public/image/chef2.png">
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
@@ -80,7 +80,7 @@
             </div>
 
             <div class="profile">
-                <img src="image/chef3.jpg">
+                <img src="../../public/image/chef3.jpg">
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
@@ -97,7 +97,7 @@
             </div>
 
             <div class="profile">
-                <img src="image/chef4.jpg">
+                <img src="../../public/image/chef4.jpg">
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
