@@ -1,8 +1,8 @@
 <?php
 session_start(); // Start the session
 
-include_once '../config/Database.php';
-include_once '../model/UserAdminManager.php';
+include_once '../config/userdatabase.php';
+include_once '../models/UserAdminManager.php';
 
 // Define the checkSessionTimeout function
 function checkSessionTimeout()
@@ -157,8 +157,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if ($result_user->num_rows > 0): ?>
-                            <?php while ($row = $result_user->fetch_assoc()): ?>
+                        <?php if (count($result_user) > 0): ?>
+                            <?php foreach ($result_user as $row): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['user_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['username']); ?></td>
@@ -181,7 +181,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         </div>
                                     </td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
                                 <td colspan="7">No users found</td>
@@ -217,8 +217,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if ($result_admin->num_rows > 0): ?>
-                            <?php while ($row = $result_admin->fetch_assoc()): ?>
+                        <?php if (count($result_admin) > 0): ?>
+                            <?php foreach ($result_admin as $row): ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars($row['admin_id']); ?></td>
                                     <td><?php echo htmlspecialchars($row['usernameAdmin']); ?></td>
@@ -236,12 +236,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                 <input type="hidden" name="admin_id" value="<?php echo $row['admin_id']; ?>">
                                                 <button type="submit" name="edit" class="button">Edit</button>
                                             </form>
-                                            <button class="button deleteButton" 
+                                            <button class="button deleteButton"
                                                 onclick="deleteAdmin(<?php echo $row['admin_id']; ?>)">Delete</button>
                                         </div>
                                     </td>
                                 </tr>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         <?php else: ?>
                             <tr>
                                 <td colspan="7">No admins found</td>
