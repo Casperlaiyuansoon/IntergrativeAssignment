@@ -1,6 +1,8 @@
 <?php 
 require_once '../../controller/FoodController.php';
 require_once '../../models/Food.php';
+require_once '../../controller/AddToCartControl.php';
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/models/Product.php";
 
 // Get the search term if provided
 $searchTerm = isset($_GET['search']) ? trim($_GET['search']) : null;
@@ -50,7 +52,7 @@ if ($searchTerm) {
 
             <div class="icon">
                 <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
-                <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="/FoodOrderingSystem/Public/AddToCartView.php"><i class="fa-solid fa-cart-shopping"></i></a>
             </div>
         </nav>
     </section>
@@ -89,16 +91,24 @@ if ($searchTerm) {
                                 <i class="fa-solid fa-star"></i>
                                 <i class="fa-solid fa-star-half-stroke"></i>
                             </div>
-                            <a href="#" class="menu_btn">Order Now</a>
+                            
+                            <form method="post" action="/FoodOrderingSystem/app/controller/AddToCartControl.php" >
+
+                            <input type="hidden" value="<?php echo htmlspecialchars($item['id']); ?>" name="ProductID" />
+                            <input type="hidden" value="<?php echo htmlspecialchars($item['price']); ?>" name="ProductPrice" />
+
+                            <a href="" class="menu_btn"><button type="submit" name="AddToCart" >Order Now</button></a>
+
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>
             <?php else: ?>
                 <p>No items found for your search query.</p>
             <?php endif; ?>
+    
         </div>
     </div>
-
     <!--Footer-->
     <footer>
         <div class="footer_main">
