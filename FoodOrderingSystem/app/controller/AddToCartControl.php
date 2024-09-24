@@ -92,7 +92,7 @@ function insertItem(/*Product $product*/$productID, $price){
             $statement->execute();
             
         }
-        header("location: /FoodOrderingSystem/Public/AddToCartView.php");
+        header("location: /FoodOrderingSystem/app/view/AddToCartView.php");
 
     }
 
@@ -112,7 +112,7 @@ function insertItem(/*Product $product*/$productID, $price){
             $statement->execute();
         }
     }
-    header("location: /FoodOrderingSystem/Public/AddToCartView.php");
+    header("location: /FoodOrderingSystem/app/view/AddToCartView.php");
 }
 
 if(isset($_GET['deleteID'])){
@@ -134,7 +134,7 @@ elseif(isset($_POST['clearcart'])){
     }
 
     clearCart($getEmail, $cID);
-    header("location: /FoodOrderingSystem/Public/AddToCartView.php");
+    header("location: /FoodOrderingSystem/app/view/AddToCartView.php");
 }
 
 function displayCartUser(){
@@ -223,7 +223,7 @@ function deleteItem($getProductId){
 
     $result1->execute();
 
-    header("location: /FoodOrderingSystem/Public/AddToCartView.php");
+    header("location: /FoodOrderingSystem/app/view/AddToCartView.php");
 }
 
 function insertOrder(){

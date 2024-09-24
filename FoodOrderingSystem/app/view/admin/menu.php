@@ -90,12 +90,12 @@ if ($searchTerm) {
                                     <i class="fa-solid fa-star-half-stroke"></i>
                                 </div>
 
-                                <a href="#" class="menu_btn">Add Now</a>
-
+<!--                        <a href="#" class="menu_btn">Add Now</a>-->
+                             
 
                                 <input type="hidden" name="ProductID" value="<?php echo htmlspecialchars($item['id']); ?>" />
                                 <input type="hidden" name="ProductPrice" value="<?php echo htmlspecialchars($item['price']); ?>" />
-                                <button type='submit' class="menu_btn b1" name="AddToCart" ><a href="#" class="menu_btn">Order Now</a></button>
+                               <input type="submit" name="AddToCart" value="Add Now" class="menu_btn"/>
 
                             </div>
                             </form>
