@@ -95,7 +95,7 @@ if ($searchTerm) {
 
                                 <input type="hidden" name="ProductID" value="<?php echo htmlspecialchars($item['id']); ?>" />
                                 <input type="hidden" name="ProductPrice" value="<?php echo htmlspecialchars($item['price']); ?>" />
-                                <button type='submit' class='menu_btn b1' name="AddToCart" ><a href="#" class="menu_btn">Order Now</a></button>
+                                <button type='submit' class="menu_btn b1" name="AddToCart" ><a href="#" class="menu_btn">Order Now</a></button>
 
                             </div>
                             </form>
