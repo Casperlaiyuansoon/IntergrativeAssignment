@@ -1,0 +1,7 @@
+repository\StockRepository.class
+service\StockService.class
+com\example\supplier\SupplierController.class
+model\Stock.class
+com\example\supplier\controller\StockController.class
+com\example\supplier\Supplier.class
+com\example\supplier\SupplierServiceApplication.class

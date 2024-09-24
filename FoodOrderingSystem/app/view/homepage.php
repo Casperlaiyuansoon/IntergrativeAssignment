@@ -57,7 +57,7 @@ checkSessionTimeout();
 
                 <div class="icon">
                     <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
-                    <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="AddToCartView.php"><i class="fa-solid fa-cart-shopping"></i></a>
                     <a href="user_profile.php" id="profile-link"><i class="fa-solid fa-user"></i></a>
                 </div>
 

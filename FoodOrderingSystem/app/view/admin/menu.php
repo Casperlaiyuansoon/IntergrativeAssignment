@@ -50,7 +50,7 @@ if ($searchTerm) {
 
                 <div class="icon">
                     <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
-                    <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                    <a href="../../view/AddToCartView.php"><i class="fa-solid fa-cart-shopping"></i></a>
                 </div>
             </nav>
         </section>
@@ -78,7 +78,7 @@ if ($searchTerm) {
                             <div class="small_card">
                                 <i class="fa-solid fa-heart"></i>
                             </div>
-
+                            <form method="post" action="/FoodOrderingSystem/app/controller/AddToCartControl.php">
                             <div class="menu_info">
                                 <h2><?php echo htmlspecialchars($item['name']); ?></h2>
                                 <h3>RM<?php echo htmlspecialchars($item['price']); ?></h3>
@@ -89,8 +89,16 @@ if ($searchTerm) {
                                     <i class="fa-solid fa-star"></i>
                                     <i class="fa-solid fa-star-half-stroke"></i>
                                 </div>
+<<<<<<< HEAD
                                 <a href="#" class="menu_btn">Add Now</a>
+=======
+
+                                <input type="hidden" name="ProductID" value="<?php echo htmlspecialchars($item['id']); ?>" />
+                                <input type="hidden" name="ProductPrice" value="<?php echo htmlspecialchars($item['price']); ?>" />
+                                <button type='submit' class='menu_btn b1' name="AddToCart" ><a href="#" class="menu_btn">Order Now</a></button>
+>>>>>>> 902edee324909d37d8209eb3e2b7fc055207408b
                             </div>
+                            </form>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>
