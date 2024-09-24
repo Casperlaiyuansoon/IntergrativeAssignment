@@ -15,6 +15,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
         <!-- ===== Style ===== -->
         <link rel="stylesheet" href="../../../public/css/adminmenu.css">
         <link rel="stylesheet" href="../../../public/css/adminmenu2.css">
+        <link rel="stylesheet" href="../../../public/css/print.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     </head>
@@ -42,14 +43,14 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         </a>
                     </li>
                     <li>
-                        <a href="#">
-                            <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
+                        <a href="adminmenu.php">
+                            <span class="icon"><ion-icon name="fast-food-outline"></ion-icon></span>
                             <span class="title">Menu</span>
                         </a>
                     </li>
                     <li>
                         <a href="#">
-                            <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+                            <span class="icon"><ion-icon name="bag-remove-outline"></ion-icon></ion-icon></span>
                             <span class="title">Order</span>
                         </a>
                     </li>
@@ -85,8 +86,11 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         <div class="cardHeader">
                             <h2>Food Menu</h2>
 
+                            <!-- Print fucntion -->
+
                             <!-- display the food info in the food form table -->
                             <a href="#" class="btn" onclick="document.getElementById('foodForm').style.display = 'block'">Create Food</a>
+                          
                         </div>
 
                         <!-- Food Form -->
@@ -141,7 +145,10 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                                     </tr>
                                 </tbody>
                             <?php endforeach ?>
-                        </table>
+                        </table>   
+                                       <div class="button-container">
+                <button onclick="window.print()" class="btn btn-primary">Print Menu</button>
+                </div>
                     </div>
                 </div>
             </div>
@@ -175,7 +182,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
 
 
         <!-- =============== Scripts =============== -->
-        <script src="js/adminmenu.js"></script>
+        <script src="../../../public/js/adminmenu.js"></script>
 
         <!-- =============== ionicons =============== -->
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>

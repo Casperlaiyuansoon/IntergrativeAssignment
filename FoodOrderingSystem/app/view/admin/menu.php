@@ -89,7 +89,7 @@ if ($searchTerm) {
                                     <i class="fa-solid fa-star"></i>
                                     <i class="fa-solid fa-star-half-stroke"></i>
                                 </div>
-                                <a href="#" class="menu_btn">Order Now</a>
+                                <a href="#" class="menu_btn">Add Now</a>
                             </div>
                         </div>
                     <?php endforeach; ?>
