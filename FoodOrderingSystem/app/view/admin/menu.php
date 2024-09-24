@@ -78,7 +78,7 @@ if ($searchTerm) {
                             <div class="small_card">
                                 <i class="fa-solid fa-heart"></i>
                             </div>
-
+                            <form method="post" action="/FoodOrderingSystem/app/controller/AddToCartControl.php">
                             <div class="menu_info">
                                 <h2><?php echo htmlspecialchars($item['name']); ?></h2>
                                 <h3>RM<?php echo htmlspecialchars($item['price']); ?></h3>
@@ -89,8 +89,12 @@ if ($searchTerm) {
                                     <i class="fa-solid fa-star"></i>
                                     <i class="fa-solid fa-star-half-stroke"></i>
                                 </div>
-                                <a href="#" class="menu_btn">Order Now</a>
+
+                                <input type="hidden" name="ProductID" value="<?php echo htmlspecialchars($item['id']); ?>" />
+                                <input type="hidden" name="ProductPrice" value="<?php echo htmlspecialchars($item['price']); ?>" />
+                                <button type='submit' class='menu_btn b1' name="AddToCart" ><a href="#" class="menu_btn">Order Now</a></button>
                             </div>
+                            </form>
                         </div>
                     <?php endforeach; ?>
                 <?php else: ?>

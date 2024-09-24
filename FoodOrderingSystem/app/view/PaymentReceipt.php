@@ -179,6 +179,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     .b2 {
         background-color: brown;
     }
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+.btn-primary:active {
+  background-color: #004085;
+  transform: translateY(0);
+}
+
+.btn-primary:focus {
+  outline: none;
+  box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+}
 </style>
 <body>
 
@@ -259,8 +274,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class='payment-button'>
-                    <button type='button' class='b1' ><a href='/FoodOrderingSystem/public/homepage.php'>Payment Completed</a></button></br>
-                    <!-- <button type='submit' class='b1' name='generate' >Download Receipt</button></br> -->
+                    <button type='button' class='b1' ><a href='/FoodOrderingSystem/app/view/homepage.php'>Payment Completed</a></button></br>
+                    <button onclick="window.print()" class="b1 btn btn-primary">Print Receipt</button>
                     </div>
 
                 </div>
