@@ -15,9 +15,9 @@
             </div>
 
             <ul>
-                <li><a href="/FoodOrderingSystem/Public/homepage.php">Home</a></li>
+                <li><a href="homepage.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="/FoodOrderingSystem/Public/menu.php">Menu</a></li>
+                <li><a href="menu.php">Menu</a></li>
                 <li><a href="OrderHistory.php">Order History</a></li>
                 <li><a href="PaymentHistory.php">Payment History</a></li>
                 <li><a href="review.php">Review</a></li>
@@ -27,7 +27,7 @@
             <div class="icon">
                 <i class="fa-solid fa-magnifying-glass"></i>
                 <!-- <a href="cart.php"><i class="fa-solid fa-heart"></i></a> --->
-                <a href="/FoodOrderingSystem/Public/AddToCartView.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="AddToCartView.php"><i class="fa-solid fa-cart-shopping"></i></a>
             </div>
 
             <div class="login">
@@ -36,40 +36,34 @@
         </nav></br></br></br></br></br></br></br>
 <?php 
 
-$dbHost = "localhost";
-$dbUser = "root";
-$dbPassword = "";
-$dbName = "test1";
+require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
 
-$db = new mysqli($dbHost, $dbUser, $dbPassword, $dbName);
-
-// Check connection
-if ($db->connect_error) {
-    die("Connection failed: " . $db->connect_error);
-}
+        $database = new Database();
+        // Get the database connection
+        $db = $database->getConnection();
 
 session_start();
 
 //$_SESSION['email'] = "zy@gmail.com";
 $email = $_SESSION['email'];
 
-$sql = "SELECT P.PAYMENTID, P.USEREMAIL, P.PAYMENTAMOUNT, P.PAYMENTMETHOD, P.PAYMENTTIME FROM PAYMENT P WHERE P.USEREMAIL = '$email'";
+$sql = "SELECT P.PAYMENTID, P.USEREMAIL, P.ORDERID, P.PAYMENTAMOUNT, P.PAYMENTMETHOD, P.PAYMENTTIME FROM PAYMENT P WHERE P.USEREMAIL = '$email'";
 $result = $db->query($sql);
 //$result->execute();
 
 $xml = new SimpleXMLElement('<?xml-stylesheet type="text/xsl" href="PaymentHistory.xsl"?><payments/>');
 //$pi = $xml->addProcessingInstruction('xml-stylesheet', 'type="text/xsl" href="OrderHistory.xsl"');
 
-if($result->num_rows > 0){
-    while($row = $result->fetch_assoc()){
+while($row = $result->fetch(PDO::FETCH_ASSOC)){
 
         $order = $xml->addChild('payment');
         $order->addAttribute('id', $row['PAYMENTID']);
+        $order->addChild('order_id', $row['ORDERID']);
         $order->addChild('amount', $row['PAYMENTAMOUNT']);
         $order->addChild('method', $row['PAYMENTMETHOD']);
         $order->addChild('payment_date', $row['PAYMENTTIME']);
-    }
 }
+
 
 //XSLT Process
 $xmlfilename = "PaymentHistory.xml";
