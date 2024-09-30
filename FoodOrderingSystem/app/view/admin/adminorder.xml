@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<orders>
+    <order id="19">
+        <user>laiys-wm21@student.tarc.edu.my</user>
+        <amount>RM12</amount>
+        <time>2024-09-02 19:44:00.00000</time>
+        <status>Delivered</status>
+    </order>
+    <order id="20">
+        <user>laiys-wm21@student.tarc.edu.my</user>
+        <amount>RM110</amount>
+        <time>2024-09-02 19:44:00.00000</time>
+        <status>Pending</status>
+    </order>
+<order id="19">
+        <user>laiys-wm21@student.tarc.edu.my</user>
+        <amount>RM6</amount>
+        <time>2024-09-02 19:44:00.00000</time>
+        <status>In Progress</status>
+    </order>
+</orders>
+
+

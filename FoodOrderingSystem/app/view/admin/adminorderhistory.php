@@ -13,7 +13,7 @@
     <body>
         <!-- ================== Navigation ========================== -->
         <div class="container">
-                       <div class="navigation">
+            <div class="navigation">
                 <ul>
                     <li>
                         <a href="#">
@@ -56,7 +56,7 @@
 
 
             <!-- ================================= Main ================================= -->
-           <div class="main">
+            <div class="main">
                 <div class="topbar">
                     <div class="toggle">
                         <ion-icon name="menu-outline"></ion-icon>
@@ -124,57 +124,61 @@
                 <div class="details">
                     <div class="recentOrders">
                         <div class="cardHeader">
-                            <h2>Order </h2>
+                            <h2>Order List</h2>
                             <a href="#" class="btn">View All</a>
                         </div>
 
-                        <table>
-                            <thead>
-                                <tr>
-                                    <td>No</td>
-                                    <td>Image</td>
-                                    <td>Name</td>
-                                    <td>Price</td>
-                                    <td>Action</td>
-                                </tr>
-                            </thead>
+                        <?php
+                        require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/Database.php";
 
-                            <tbody>
-                                <tr>
-                                    <td>Star Refrigerator</td>
-                                    <td>$1200</td>
-                                    <td>Paid</td>
-                                    <td>Paid</td>
-                                    <td><span class="status delivered">Delivered</span></td>
-                                </tr>
+                        $database = new Database();
+                        // Get the database connection
+                        $db = $database->getConnection();
 
-                                <tr>
-                                    <td>Dell laptop</td>
-                                    <td>$110</td>
-                                    <td>Due</td>
-                                    <td><span class="status pending">Pending</span></td>
-                                </tr>
+                        // Fetch orders from the database
+                        $query = "SELECT id,ORDERID, UserEmail,OrderAmount, OrderCreation,OrderAmount, OrderStatus FROM orders,ordermain";
+                        $result = $db->prepare($query);
+                        $result->execute();
 
-                                <tr>
-                                    <td>Aplle Watch</td>
-                                    <td>$1200</td>
-                                    <td>Paid</td>
-                                    <td><span class="status return">Return</span></td>
-                                </tr>
+                        $xml = new SimpleXMLElement('<?xml-stylesheet type="text/xsl" href="adminorder.xsl"?><orders/>');
 
-                                <tr>
-                                    <td>Adidas Shoes</td>
-                                    <td>$620</td>
-                                    <td>Due</td>
-                                    <td><span class="status inProgress">In Progress</span></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                            $order = $xml->addChild('order');
+                            $order->addAttribute('id', $row['ORDERID']);
+                            $order->addChild('user', $row['UserEmail']);
+                            $order->addChild('amount', $row['OrderAmount']);
+                            $order->addChild('time', $row['OrderCreation']);
+                            $order->addChild('status', $row['OrderStatus']);
+                        }
+
+                        // Save XML to file
+                        $xml->asXML('adminorder.xml');
+                        ?>
+
+                        <?php
+
+                        //XSLT Process
+                        class XSLTTransformation {
+
+                            public function __construct($xmlfilename, $xslfilename) {
 
 
+                                $xml = new DOMDocument();
+                                $xml->load($xmlfilename);
 
+                                $xsl = new DOMDocument();
+                                $xsl->load($xslfilename);
 
+                                $proc = new XSLTProcessor();
+                                $proc->importStylesheet($xsl);
 
+                                echo $proc->transformToXml($xml);
+                            }
+
+                        }
+
+                        $worker = new XSLTTransformation("adminorder.xml", "adminorder.xsl");
+                        ?>
 
 
                         <!-- =============== Scripts =============== -->
