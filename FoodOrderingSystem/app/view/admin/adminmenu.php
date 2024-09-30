@@ -49,7 +49,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                      <a href="adminorderhistory.php">
                             <span class="icon"><ion-icon name="bag-remove-outline"></ion-icon></ion-icon></span>
                             <span class="title">Order</span>
                         </a>
@@ -90,7 +90,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
 
                             <!-- display the food info in the food form table -->
                             <a href="#" class="btn" onclick="document.getElementById('foodForm').style.display = 'block'">Create Food</a>
-                          
+
                         </div>
 
                         <!-- Food Form -->
@@ -146,9 +146,12 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                                 </tbody>
                             <?php endforeach ?>
                         </table>   
-                                       <div class="button-container">
-                <button onclick="window.print()" class="btn btn-primary">Print Menu</button>
-                </div>
+                      
+                        <div class="button-container">
+                            <a href="viewsupplier.php" class="btn">Check food stock</a>
+
+                            <button onclick="window.print()" class="btn btn-primary">Print Menu</button>
+                        </div>
                     </div>
                 </div>
             </div>

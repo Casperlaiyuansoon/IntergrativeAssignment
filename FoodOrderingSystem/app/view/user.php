@@ -62,8 +62,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul>
                 <li>
                     <a href="#">
-                        <span class="icon"><ion-icon name="../../public/image/logo.png"></ion-icon></span>
-                        <span class="title">Food Ordeing Dashbroad</span>
+                           <span class="icon"><img src="../../public/image/logo.png"></span>
+                           <span class="title">Ordering System</span>
                     </a>
                 </li>
 
@@ -83,14 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <li>
                     <a href="admin/adminmenu.php">
-                        <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
+                        <span class="icon"><ion-icon name="fast-food-outline"></ion-icon></span>
                         <span class="title">Menu</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+                    <a href="admin/adminorderhistory.php">
+                        <span class="icon"><ion-icon name="bag-remove-outline"></ion-icon></span>
                         <span class="title">Order</span>
                     </a>
                 </li>
@@ -114,7 +114,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </label>
                     </form>
                 </div>
-                <div class="user"><img src="image/Customer1.jpeg" alt=""></div>
+                <div class="user"><img src="../../public/image/review_1.png" alt=""></div>
             </div>
 
             <!-- User Management Section -->
