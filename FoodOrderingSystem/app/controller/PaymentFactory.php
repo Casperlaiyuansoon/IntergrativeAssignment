@@ -22,6 +22,12 @@ class PaymentFactory{
             $order = new OrderSystem();
             $order->update($data);
         }
+
+        else if($type == "Update Status"){
+
+            $payment = new PaymentSystem();
+            $payment->update($data);
+        }
         
         else {
             throw new Exception("Invalid");

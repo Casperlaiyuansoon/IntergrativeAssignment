@@ -4,43 +4,17 @@
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.php";
 require_once "C:/xampp/htdocs/FoodOrderingSystem/app/controller/GatewayControl.php";
 
-/*
-require("C:/xampp/htdocs/AssignmentFOS/MVC/Controller/fpdf.php");
+if(isset($_POST['payment-complete'])){
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $pdf = new FPDF();
-    $pdf->AddPage();
+    $paymentID = $_POST['paymentID'];
+    $totalPrice = $_POST['totalPrice'];
 
-    // Set font for the document
-    $pdf->SetFont('Arial', 'B', 16);
+    $payment = PaymentFactory::createPayment($paymentID, "Update Status");
+    $order = PaymentFactory::createPayment($order->setOrderAmount($totalPrice), "Update");
 
-    // Title
-    $pdf->Cell(0, 10, 'Payment Receipt', 0, 1, 'C');
-
-    // Line break
-    $pdf->Ln(10);
-
-    foreach($Payment as $payment){ 
-        $pdf->SetFont('Arial', '', 12);
-        $pdf->Cell(50, 10, 'Receipt Number:', 0, 0);
-        $pdf->Cell(50, 10, $payment->getPaymentId(), 0, 1);
-
-        $pdf->Cell(50, 10, 'Payment Date:', 0, 0);
-        $pdf->Cell(50, 10, $payment->getPaymentTime(), 0, 1);
-
-        $pdf->Cell(50, 10, 'Payer Name:', 0, 0);
-        $pdf->Cell(50, 10, $payment->getUserEmail(), 0, 1);
-
-        $pdf->Cell(50, 10, 'Amount Paid:', 0, 0);
-        $pdf->Cell(50, 10, '$' . $payment->getPaymentAmount(), 0, 1);
-
-        $pdf->Cell(50, 10, 'Payment Method:', 0, 0);
-        $pdf->Cell(50, 10, $payment->getPaymentMethod(), 0, 1);
-    }
-    // Output the PDF as a downloadable file
-    $pdf->Output('D', 'Payment_Receipt.pdf');
+    header("location: /FoodOrderingSystem/app/view/homepage.php");
 }
-*/
+
 ?>
 
 <style>
@@ -212,6 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <h3>Payment ID: <?= $payment->getPaymentId() ?></h3>
                             <h3>User: <?= $payment->getUserEmail() ?></h3>
 
+                            <input type="hidden" name="paymentID" value="<?= $payment->getPaymentId() ?>" />
                         <?php } ?>
                     </div>
 
@@ -230,10 +205,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <td><?= $order->getOrderQuantity() ?></td>
                                 <td><?= $order->getProductName() ?></td>
                                 <td><?= $order->getPrice() ?></td>
+
+                                <input type="hidden" name="totalPrice" value="<?= $order->getPrice() ?>" />
                             </tr>
                         </tbody>
 
-                        <?php $order = PaymentFactory::createPayment($order->setOrderAmount($order->getPrice()), "Update"); } ?>
+                        <?php } ?>
                     </table>
 
                     <div class="payment-amount">
@@ -274,7 +251,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
 
                     <div class='payment-button'>
-                    <button type='button' class='b1' ><a href='/FoodOrderingSystem/app/view/homepage.php'>Payment Completed</a></button></br>
+                    <button type='submit' class='b1 btn btn-primary' name="payment-complete">Payment Completed</button></br>
                     <button onclick="window.print()" class="b1 btn btn-primary">Print Receipt</button>
                     </div>
 

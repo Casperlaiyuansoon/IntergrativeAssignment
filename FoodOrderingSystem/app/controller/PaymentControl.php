@@ -93,7 +93,7 @@ $db = $database->getConnection();
     $email = $_SESSION['email'];
     //$email = "zhen@gmail.com";
 
-    $sql2 = "SELECT PAYMENTID, USEREMAIL, TOTALAMOUNT, PAYMENTAMOUNT, PAYMENTMETHOD, PAYMENTTIME FROM PAYMENT WHERE USEREMAIL = '$email'";
+    $sql2 = "SELECT PAYMENTID, USEREMAIL, TOTALAMOUNT, PAYMENTAMOUNT, PAYMENTMETHOD, PAYMENTTIME FROM PAYMENT WHERE USEREMAIL = '$email' AND PAYMENTSTATUS IS NULL";
     $result2 = $db->query($sql2);
     $result2->execute();
 
@@ -142,15 +142,36 @@ $db = $database->getConnection();
 
     $email = $_SESSION['email'];
 
-    $sql1 = "INSERT INTO PAYMENT (USEREMAIL, TOTALAMOUNT, PAYMENTAMOUNT, PAYMENTMETHOD, PAYMENTTIME) VALUES (?, ?, ?, ?, ?)";
+    $orderID =  displayOrder();
+
+    $sql1 = "INSERT INTO PAYMENT (USEREMAIL, ORDERID, TOTALAMOUNT, PAYMENTAMOUNT, PAYMENTMETHOD, PAYMENTTIME) VALUES (?, ?, ?, ?, ?, ?)";
     $result1 = $db->prepare($sql1);
     $result1->bindParam(1, $email);
-    $result1->bindParam(2, $payment->getTotal());
-    $result1->bindParam(3, $payment->getPaymentAmount());
-    $result1->bindParam(4, $payment->getPaymentMethod());
-    $result1->bindParam(5, $payment->getPaymentTime());
+    $result1->bindParam(2, $orderID);
+    $result1->bindParam(3, $payment->getTotal());
+    $result1->bindParam(4, $payment->getPaymentAmount());
+    $result1->bindParam(5, $payment->getPaymentMethod());
+    $result1->bindParam(6, $payment->getPaymentTime());
 
     $result1->execute();
+}
+
+function updatePayment($paymentID){
+
+    require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
+
+$database = new Database();
+// Get the database connection
+$db = $database->getConnection();
+
+    $paymentStatus = "SUCCESS";
+
+    $sql3 = "UPDATE PAYMENT SET PAYMENTSTATUS = ? WHERE PAYMENTID = ?";
+    $result3 = $db->prepare($sql3);
+    $result3->bindParam(1, $paymentStatus);
+    $result3->bindParam(2, $paymentID);
+
+    $result3->execute();
 }
 
 $Payment[] = displayPaymentReceipt();
@@ -168,9 +189,14 @@ if(isset($_POST['payment-checkout'])){
     $paymentGateway = $_POST['paymentgateway'];
     $paymentDateTime = date('Y-m-d H:i:s');
 
-    $payment = PaymentFactory::createPayment($payment->setPayment($totalAmount, $paymentAmount, $paymentGateway, $paymentDateTime), "Insert");
-    
-    header("location: /FoodOrderingSystem/app/view/PaymentGatewayView.php?amount=". $paymentAmount ."&gateway=". $paymentGateway ."&time=". $paymentDateTime);
+    if($paymentGateway == NULL){
+        echo "<h3>Please Select Payment Method</h3>";
+    }
+
+    else{
+        $payment = PaymentFactory::createPayment($payment->setPayment($totalAmount, $paymentAmount, $paymentGateway, $paymentDateTime), "Insert");
+        header("location: /FoodOrderingSystem/app/view/PaymentGatewayView.php?amount=". $paymentAmount ."&gateway=". $paymentGateway ."&time=". $paymentDateTime);
+    }
 
     //$order = PaymentFactory::createPayment($order->setOrderAmount($totalAmount), "Update");
 
@@ -205,6 +231,7 @@ if(isset($_POST['post-voucher'])){
     $va = getVoucherAmount($voucherCode, $a);
     
     header("location: /FoodOrderingSystem/app/view/PaymentView.php");
+    return $va;
 
     //$order = PaymentFactory::createPayment($order->setOrderAmount($totalAmount), "Update");
 

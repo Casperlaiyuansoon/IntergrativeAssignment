@@ -38,6 +38,11 @@ class Payment{
         $this->paymentMethod = $paymentMethod;
     }
 
+    public function setPaymentID($paymentID){
+        $this->paymentID = $paymentID;
+        return $this;
+    }
+
     public function getPaymentId(){
         return $this->paymentID;
     }

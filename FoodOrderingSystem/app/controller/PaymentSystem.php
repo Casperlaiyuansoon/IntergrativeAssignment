@@ -13,6 +13,10 @@ class PaymentSystem{
         insertPayment($item);
     }
 
+    public function update($item){
+        updatePayment($item);
+    }
+
     public function creditCardGateway(){
 
         // Generating a CSRF token
