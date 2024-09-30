@@ -362,7 +362,7 @@ require_once "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.p
 
                     <div class="payment-button">
                         <button type="submit" class="b1" name="payment-checkout">Payment Checkout</button></br>
-                        <button type="submit" class="b2" name="payment-delete"><a href="/FoodOrderingSystem/public/homepage.php">Payment Cancel</a></button></a>
+                        <button type="submit" class="b2" name="payment-delete"><a href="/FoodOrderingSystem/app/view/homepage.php">Payment Cancel</a></button></a>
                     </div>
                 </div>
                         </form>
@@ -420,11 +420,21 @@ require_once "C:/xampp/htdocs/FoodOrderingSystem/app/controller/PaymentControl.p
             */
         }
 
+        <?php if(isset($_GET['voucher'])){
+
+            $voucher = $_GET['voucher'];
+        }
+        
+        else{
+            $voucher = 0.00;
+        }
+        ?>
+
         function amountCalculation(){
 
             var subTotalValue = <?= $displaySubTotal ?>;
             var charge = 0.05;
-            var voucherValue = 0.00;
+            var voucherValue = <?= $voucher ?>;
             var totalValue = subTotalValue + (subTotalValue * charge) - voucherValue;
 
             const subTotal = document.querySelector('.subtotal');

@@ -202,7 +202,7 @@ if(isset($_POST['payment-checkout'])){
 
 }
 
-function getVoucherAmount($code, $amount){
+function getVoucherAmount($code){
 
     require_once "C:/xampp/htdocs/FoodOrderingSystem/app/config/database.php";
 
@@ -210,10 +210,11 @@ $database = new Database();
 // Get the database connection
 $db = $database->getConnection();
 
-    $query = "SELECT * FROM VOUCHERS WHERE code = '$code'";
+    $query = "SELECT DISCOUNT_PERCENTAGE FROM VOUCHERS WHERE CODE = '$code'";
     $stmt = $db->prepare($query);
     $stmt->execute();
 
+    $amount = 0;
     while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
 
         $amount = $row['DISCOUNT_PERCENTAGE'];
@@ -223,17 +224,15 @@ $db = $database->getConnection();
 
 }
 
+$va = 0.00;
+// $voucherCode = "1";
+// $va = getVoucherAmount($voucherCode);
+
 if(isset($_POST['post-voucher'])){
 
     $voucherCode = $_POST['promoCode'];
-
-    $a = 0;
-    $va = getVoucherAmount($voucherCode, $a);
-    
-    header("location: /FoodOrderingSystem/app/view/PaymentView.php");
-    return $va;
-
-    //$order = PaymentFactory::createPayment($order->setOrderAmount($totalAmount), "Update");
+    $va = getVoucherAmount($voucherCode);
+    header("location: /FoodOrderingSystem/app/view/PaymentView.php?voucher=". $va);
 
 }
 
