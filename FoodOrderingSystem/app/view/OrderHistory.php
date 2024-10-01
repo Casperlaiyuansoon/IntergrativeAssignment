@@ -57,8 +57,8 @@
             while($row = $result->fetch(PDO::FETCH_ASSOC)){
 
                 $order = $xml->addChild('order');
-                $order->addAttribute('id', $row['id']);
-                $order->addAttribute('orderid', $row['ORDERID']);
+                $order->addAttribute('id', $row['ORDERID']);
+                //$order->addAttribute('orderid', $row['ORDERID']);
                 $order->addChild('product', $row['NAME']);
                 $order->addChild('quantity', $row['ORDERQUANTITY']);
                 $order->addChild('price', $row['ORDERPRICE']);
