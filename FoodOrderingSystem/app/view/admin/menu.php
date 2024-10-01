@@ -72,7 +72,7 @@ if ($searchTerm) {
                     <?php foreach ($foodItems as $item): ?>
                         <div class="menu_card">
                             <div class="menu_image">
-                                <img src="<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" />
+                                <img src="\FoodOrderingSystem\public\<?php echo htmlspecialchars($item['image']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" />
                             </div>
 
                             <div class="small_card">
