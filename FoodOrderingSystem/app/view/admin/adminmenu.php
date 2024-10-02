@@ -31,7 +31,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="admindashboard.php">
                             <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                             <span class="title">Dashboard</span>
                         </a>
@@ -49,7 +49,7 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                         </a>
                     </li>
                     <li>
-                      <a href="adminorderhistory.php">
+                      <a href="adminorder.php">
                             <span class="icon"><ion-icon name="bag-remove-outline"></ion-icon></ion-icon></span>
                             <span class="title">Order</span>
                         </a>

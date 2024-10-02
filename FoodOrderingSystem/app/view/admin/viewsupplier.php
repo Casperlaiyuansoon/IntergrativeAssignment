@@ -1,59 +1,49 @@
 <?php
-// Send a GET request to the Supplier API
-$apiUrl = 'http://localhost:8080/api/suppliers'; // Ensure this matches your Spring Boot app
-$response = file_get_contents($apiUrl);
-$suppliers = json_decode($response, true);
+// URL of the Java Spring Boot REST API
+$apiUrl = 'http://localhost:8080/api/inventory';
+
+// Initialize cURL session
+$ch = curl_init($apiUrl);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+// Execute the request
+$response = curl_exec($ch);
+curl_close($ch);
+
+// Decode the JSON response
+$inventoryItems = json_decode($response, true);
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Supplier Information</title>
-    <style>
-        table {
-            width: 60%;
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+    <title>Supplier Inventory</title>
 </head>
 <body>
-    <h2 style="text-align: center;">Supplier Information</h2>
-    <?php if ($suppliers && count($suppliers) > 0): ?>
-        <table>
-            <thead>
-                <tr>
-                    <th>Supplier ID</th>
-                    <th>Name</th>
-                    <th>Product</th>
-                    <th>Stock</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($suppliers as $supplier): ?>
+    <h1>Supplier Inventory</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item Name</th>
+                <th>Quantity Available</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (is_array($inventoryItems) && count($inventoryItems) > 0): ?>
+                <?php foreach ($inventoryItems as $item): ?>
                     <tr>
-                        <td><?php echo htmlspecialchars($supplier['id']); ?></td>
-                        <td><?php echo htmlspecialchars($supplier['name']); ?></td>
-                        <td><?php echo htmlspecialchars($supplier['product']); ?></td>
-                        <td><?php echo htmlspecialchars($supplier['stock']); ?></td>
-                        <td><?php echo htmlspecialchars($supplier['price']); ?></td>
+                        <td><?php echo htmlspecialchars($item['name']); ?></td>
+                        <td><?php echo htmlspecialchars($item['quantity']); ?></td>
                     </tr>
                 <?php endforeach; ?>
-            </tbody>
-        </table>
-    <?php else: ?>
-        <p style="text-align: center;">No supplier information available.</p>
-    <?php endif; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2">No inventory data available</td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+    
+    <a href="adminmenu.php" class="btn">Back to Admin Menu</a>
 </body>
 </html>
-
-
