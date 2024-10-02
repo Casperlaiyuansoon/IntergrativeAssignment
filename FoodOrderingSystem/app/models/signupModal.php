@@ -7,7 +7,7 @@ class User {
     public $email;
     public $password;
     public $phone_number;
-    public $status = 'Active';
+    public $status = 'Inactive';
     public $createdAt;
 
     // Constructor with DB connection

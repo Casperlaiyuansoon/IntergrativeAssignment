@@ -42,6 +42,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result_admin = $manager->searchAdmins($_POST['search_admin']);
     }
 }
+
+// Fetch count of users and admins
+function fetchCountsCurl()
+{
+    $url = 'http://localhost:3000/api/count';
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($response === false) {
+        return ['error' => 'Failed to connect to the server: ' . curl_error($ch)];
+    }
+
+    if ($httpCode !== 200) {
+        return ['error' => 'Server returned an error: HTTP ' . $httpCode];
+    }
+
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return ['error' => 'Failed to parse server response: ' . json_last_error_msg()];
+    }
+
+    return $data;
+}
+
+$counts = fetchCountsCurl();
 ?>
 
 <!DOCTYPE html>
@@ -62,15 +91,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <ul>
                 <li>
                     <a href="#">
-                           <span class="icon"><img src="../../public/image/logo.png"></span>
-                           <span class="title">Ordering System</span>
+                        <span class="icon"><ion-icon name="../../public/image/logo.png"></ion-icon></span>
+                        <span class="title">Food Ordering Dashboard</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="#">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">Dashbroad</span>
+                        <span class="title">Dashboard</span>
                     </a>
                 </li>
 
@@ -83,14 +112,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <li>
                     <a href="admin/adminmenu.php">
-                        <span class="icon"><ion-icon name="fast-food-outline"></ion-icon></span>
+                        <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
                         <span class="title">Menu</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="admin/adminorderhistory.php">
-                        <span class="icon"><ion-icon name="bag-remove-outline"></ion-icon></span>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
                         <span class="title">Order</span>
                     </a>
                 </li>
@@ -122,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </label>
                     </form>
                 </div>
-                <div class="user"><img src="../../public/image/review_1.png" alt=""></div>
+                <div class="user"><img src="image/Customer1.jpeg" alt=""></div>
             </div>
 
             <!-- User Management Section -->
@@ -137,6 +166,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="submit" value="Search" class="button">
                     </label>
                 </form>
+
+                <!-- Insert the user count display here -->
+                <?php if (isset($counts['error'])): ?>
+                    <p>Error fetching counts: <?php echo htmlspecialchars($counts['error']); ?></p>
+                <?php else: ?>
+                    <p>Total Users:
+                        <?php echo isset($counts['user_count']) ? htmlspecialchars($counts['user_count']) : 'N/A'; ?>
+                    </p>
+                <?php endif; ?>
+
                 <table>
                     <thead>
                         <tr>
@@ -196,6 +235,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <input type="submit" value="Search" class="button">
                     </label>
                 </form>
+
+                <!-- Insert the admin count display here -->
+                <?php if (isset($counts['error'])): ?>
+                    <p>Error fetching counts: <?php echo htmlspecialchars($counts['error']); ?></p>
+                <?php else: ?>
+                    <p>Total Admins:
+                        <?php echo isset($counts['admin_count']) ? htmlspecialchars($counts['admin_count']) : 'N/A'; ?>
+                    </p>
+                <?php endif; ?>
 
                 <table>
                     <thead>
