@@ -50,7 +50,7 @@
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
-                    <p class="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class="bio">With over 15 years of experience in Italian fine dining. </p>
 
                     <div class="team_icon">
                         <i class="fa-brands fa-facebook-f"></i>
@@ -67,7 +67,7 @@
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
-                    <p class="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class="bio">Chef David is a master of pastries and desserts.</p>
 
                     <div class="team_icon">
                         <i class="fa-brands fa-facebook-f"></i>
@@ -84,7 +84,7 @@
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
-                    <p class="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class="bio">Specializing in fusion cuisine.</p>
 
                     <div class="team_icon">
                         <i class="fa-brands fa-facebook-f"></i>
@@ -101,7 +101,7 @@
 
                 <div class="info">
                     <h2 class="name">Chef</h2>
-                    <p class="bio">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    <p class="bio">Chef Liam’s expertise lies in grilling and barbecue.</p>
 
                     <div class="team_icon">
                         <i class="fa-brands fa-facebook-f"></i>
