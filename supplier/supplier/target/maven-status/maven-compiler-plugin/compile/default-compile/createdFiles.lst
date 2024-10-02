@@ -1,0 +1,4 @@
+com\example\supplier\model\Ingredient.class
+com\example\supplier\repository\IngredientRepository.class
+com\example\supplier\controller\SupplierController.class
+com\example\supplier\SupplierServiceApplication.class
