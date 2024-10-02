@@ -1,7 +1,7 @@
 <?php
 
-include_once 'DatabaseConnection.php'; 
-class BaseModel {
+include_once '../config/database.php'; 
+class BaseModel_roger {
     protected $conn;
     protected $table;
     protected $primaryKey = 'id';

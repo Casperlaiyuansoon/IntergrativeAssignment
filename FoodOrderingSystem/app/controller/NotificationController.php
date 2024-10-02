@@ -14,7 +14,7 @@ $notificationModel = new NotificationModel();
 // Function to handle the creation of notifications
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_notification'])) {
     $data = [
-        'customer_id' => $_POST['customer_id'],
+        'user_id' => $_POST['user_id'],
         'promotion_id' => $_POST['promotion_id'],
         'message' => $_POST['message'],
         'status' => 'pending'
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['create_notification']
 
 // Function to handle fetching notifications
 if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['fetch_notifications'])) {
-    $customerId = $_GET['customer_id'];
+    $customerId = $_GET['user_id'];
     $command = new ReadNotificationCommand($notificationModel, $customerId);
     $invoker = new CommandInvoker();
     try {
@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['fetch_notifications']))
     
     
     if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['view_notifications'])) {
-    $customerId = $_SESSION['customer_id']; // Assuming customer_id is stored in session after login
+    $customerId = $_SESSION['user_id']; // Assuming customer_id is stored in session after login
 
     $command = new ReadNotificationCommand($notificationModel, $customerId);
     $invoker = new CommandInvoker();

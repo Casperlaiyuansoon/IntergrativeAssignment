@@ -1,7 +1,7 @@
 <?php
-include_once 'BaseModel.php';
+include_once 'BaseModel_roger.php';
 
-class PromotionModel extends BaseModel {
+class PromotionModel extends BaseModel_roger {
     // Define the table and primary key
     protected $table = 'promotions';
     protected $primaryKey = 'id';

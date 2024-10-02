@@ -18,7 +18,7 @@ try {
     foreach ($notifications as $notification) {
         $notif = $xml->addChild('notification');
         $notif->addChild('id', $notification['id']);
-        $notif->addChild('customer_id', $notification['customer_id']);
+        $notif->addChild('user_id', $notification['user_id']);
         $notif->addChild('promotion_id', $notification['promotion_id']);
         $notif->addChild('message', $notification['message']);
         $notif->addChild('status', $notification['status']);
@@ -26,11 +26,11 @@ try {
     }
     
     // Save XML to a file in the 'xml' directory
-    $xmlFile = '../xml/notification.xml';
+    $xmlFile = '../xmlandxslt/notification.xml';
     $xml->asXML($xmlFile);
 
     // Load XML and XSL files
-    $xslFile = '../xml/notification.xsl'; // Ensure this path is correct
+    $xslFile = '../xmlandxslt/notification.xsl'; // Ensure this path is correct
 
     if (!file_exists($xslFile)) {
         die("XSL file not found: $xslFile");
@@ -62,7 +62,7 @@ try {
     }
 
     // Save the filtered XML
-    $filteredXmlFile = '../xml/filtered_notification.xml';
+    $filteredXmlFile = '../xmlandxslt/filtered_notification.xml';
     $filteredXml->save($filteredXmlFile);
 
     // Load filtered XML for transformation

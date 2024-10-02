@@ -1,7 +1,7 @@
 <?php
 include_once 'BaseModel_roger.php'; // Ensure BaseModel is included
 
-class VoucherModel extends BaseModel {
+class VoucherModel extends BaseModel_roger {
     protected $table = 'vouchers'; // Set the table name
     protected $primaryKey = 'id';  // Set the primary key field
 

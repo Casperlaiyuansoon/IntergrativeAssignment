@@ -1,8 +1,11 @@
 <?php
-include_once 'BaseModel.php';
+include_once 'BaseModel_roger.php';
+include_once '../config/database.php';
 
-class NotificationModel extends BaseModel {
+class NotificationModel extends BaseModel_roger {
     protected $table = 'notifications';
+    protected $usertable = 'user';
+    
 
     // Create a new notification
     public function createNotification($data) {
@@ -25,7 +28,7 @@ class NotificationModel extends BaseModel {
 
     // Fetch all notifications for a specific customer
     public function getNotificationsByCustomerId($customerId) {
-        $query = "SELECT * FROM {$this->table} WHERE customer_id = ?";
+        $query = "SELECT * FROM {$this->usertable} WHERE user_id = ?";
         $stmt = $this->conn->prepare($query);
         if (!$stmt) {
             error_log("SQL Prepare Error: " . $this->conn->error); // Log preparation error

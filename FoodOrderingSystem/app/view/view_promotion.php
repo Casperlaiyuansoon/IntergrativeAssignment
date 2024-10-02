@@ -40,7 +40,7 @@ foreach ($promotions as $promotion) {
 }
 
 // Save XML to a file
-$xmlFilePath = '../xml/promotions.xml';
+$xmlFilePath = '../xmlandxslt/promotions.xml';
 $xml->save($xmlFilePath);
 
 // Load the XML file

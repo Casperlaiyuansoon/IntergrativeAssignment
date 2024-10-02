@@ -12,7 +12,7 @@ $xmlData = $voucherModel->vouchersToXML($vouchers);
 
 // Load the XSLT file
 $xsl = new DOMDocument();
-$xsl->load('../xml/voucher.xsl'); // Adjust the path as necessary
+$xsl->load('../xmlandxslt/voucher.xsl'); // Adjust the path as necessary
 
 // Load the XML data
 $xml = new DOMDocument();
