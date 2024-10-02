@@ -1,9 +1,10 @@
 <?php
 include_once '../models/NotificationModel.php';
-include_once '../models/DatabaseConnection.php';
+include_once '../config/database.php';
 
 // Create a connection instance
-$conn = DatabaseConnection::getInstance();
+$db = new Database();
+$conn = $db->getConnection();
 $notificationModel = new NotificationModel();
 
 // Get the selected filter status from POST data
@@ -12,7 +13,7 @@ $filter = isset($_POST['filter']) ? $_POST['filter'] : 'all';
 try {
     // Fetch all notifications
     $notifications = $notificationModel->getAllNotifications();
-    
+
     // Create XML
     $xml = new SimpleXMLElement('<notifications/>');
     foreach ($notifications as $notification) {
@@ -24,7 +25,7 @@ try {
         $notif->addChild('status', $notification['status']);
         $notif->addChild('created_at', $notification['created_at']);
     }
-    
+
     // Save XML to a file in the 'xml' directory
     $xmlFile = '../xmlandxslt/notification.xml';
     $xml->asXML($xmlFile);
@@ -87,106 +88,39 @@ try {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>View Notifications</title>
     <style>
-        /* General body styling */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 0;
-        }
+        /* ... (previous styles remain unchanged) ... */
 
-        /* Container for centering the content */
-        .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Table styling */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table, th, td {
-            border: 1px solid #ddd;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: left;
-        }
-
-        th {
-            background-color: #007bff;
-            color: #fff;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        /* Button styling */
-        .btn {
-            background-color: #007bff;
-            color: #fff;
+        /* Add styles for Edit and Delete buttons */
+        .action-btn {
+            padding: 5px 10px;
+            margin-right: 5px;
             border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
+            border-radius: 3px;
             cursor: pointer;
-            font-size: 16px;
-            text-decoration: none;
         }
 
-        .btn:hover {
-            background-color: #0056b3;
+        .edit-btn {
+            background-color: #ffc107;
+            color: #000;
         }
 
-        /* Filter form styling */
-        .filter-form {
-            margin-bottom: 20px;
-        }
-
-        .filter-form select {
-            padding: 10px;
-            font-size: 16px;
-        }
-
-        .filter-form button {
-            padding: 10px 15px;
-            background-color: #007bff;
+        .delete-btn {
+            background-color: #dc3545;
             color: #fff;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .filter-form button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Additional button styling */
-        .create-btn {
-            display: inline-block;
-            margin-bottom: 20px;
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>View Notifications</h1>
-        
+
         <!-- Create Notification Button -->
         <div class="create-btn">
             <a href="create_notification.php" class="btn">Create Notification</a>
@@ -196,19 +130,104 @@ try {
         <form method="POST" class="filter-form">
             <label for="filter">Filter by Status:</label>
             <select name="filter" id="filter">
-                <option value="active" <?php if ($filter == 'active') echo 'selected'; ?>>Active</option>
-                <option value="pending" <?php if ($filter == 'pending') echo 'selected'; ?>>Pending</option>
-                <option value="all" <?php if ($filter == 'all') echo 'selected'; ?>>All</option>
+                <option value="active" <?php if ($filter == 'active')
+                    echo 'selected'; ?>>Active</option>
+                <option value="pending" <?php if ($filter == 'pending')
+                    echo 'selected'; ?>>Pending</option>
+                <option value="all" <?php if ($filter == 'all')
+                    echo 'selected'; ?>>All</option>
             </select>
             <button type="submit">Filter</button>
         </form>
 
         <!-- Display transformed XML -->
-        <?php
-        echo $html;
-        ?>
+        <div id="notifications-container">
+            <?php
+            // Modify the HTML output to include Edit and Delete buttons
+            $dom = new DOMDocument();
+            $dom->loadHTML($html);
+            $xpath = new DOMXPath($dom);
+
+            // Find all table rows
+            $rows = $xpath->query('//tr');
+
+            // Skip the first row (header) and process the rest
+            for ($i = 1; $i < $rows->length; $i++) {
+                $row = $rows->item($i);
+                $cells = $xpath->query('.//td', $row);
+
+                // Check if the row has cells before proceeding
+                if ($cells->length > 0) {
+                    $idCell = $cells->item(0);
+
+                    // Check if the ID cell exists and has a value
+                    if ($idCell && $idCell->nodeValue) {
+                        $id = $idCell->nodeValue;
+
+                        $actionsCell = $dom->createElement('td');
+
+                        $editBtn = $dom->createElement('button', 'Edit');
+                        $editBtn->setAttribute('class', 'action-btn edit-btn');
+                        $editBtn->setAttribute('onclick', "editNotification($id)");
+
+                        $deleteBtn = $dom->createElement('button', 'Delete');
+                        $deleteBtn->setAttribute('class', 'action-btn delete-btn');
+                        $deleteBtn->setAttribute('onclick', "deleteNotification($id)");
+
+                        $actionsCell->appendChild($editBtn);
+                        $actionsCell->appendChild($deleteBtn);
+
+                        $row->appendChild($actionsCell);
+                    }
+                }
+            }
+
+            // Add the 'Actions' header to the first row
+            $headerRow = $rows->item(0);
+            if ($headerRow) {
+                $actionsHeader = $dom->createElement('th', 'Actions');
+                $headerRow->appendChild($actionsHeader);
+            }
+
+            echo $dom->saveHTML();
+            ?>
+        </div>
 
         <a href="index.php" class="btn">Back to Home</a>
     </div>
+
+    <script>
+        function editNotification(id) {
+            // Redirect to edit page or open a modal for editing
+            window.location.href = `edit_notification.php?id=${id}`;
+        }
+
+        function deleteNotification(id) {
+            if (confirm('Are you sure you want to delete this notification?')) {
+                fetch('delete_notification.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `id=${id}`
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Notification deleted successfully');
+                            // Reload the page or remove the row from the table
+                            location.reload();
+                        } else {
+                            alert('Failed to delete notification');
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting the notification');
+                    });
+            }
+        }
+    </script>
 </body>
+
 </html>

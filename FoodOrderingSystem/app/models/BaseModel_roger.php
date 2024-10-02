@@ -8,7 +8,8 @@ class BaseModel_roger {
 
     public function __construct() {
         // Assume DatabaseConnection is already set up
-        $this->conn = DatabaseConnection::getInstance();
+        $db = new Database();
+        $this->conn = $db->getConnection();
     }
 
     // Save method to handle insert or update
@@ -24,15 +25,18 @@ class BaseModel_roger {
             $query = "UPDATE {$this->table} SET $setColumns WHERE {$this->primaryKey} = ?";
             $stmt = $this->conn->prepare($query);
             if ($stmt === false) {
-                throw new Exception("Failed to prepare update query: " . $this->conn->error);
+                throw new Exception("Failed to prepare update query.");
             }
 
-            $types = str_repeat('s', count($data)); // Assuming all fields are strings
             $values = array_values($data);
             $values[] = $id; // Add the ID to the end for the WHERE clause
+            
+            // PDO binding with positional placeholders
+            foreach ($values as $index => $value) {
+                $stmt->bindValue($index + 1, $value);  // CHANGE: bindValue for each parameter
+            }
 
-            $stmt->bind_param($types . 'i', ...$values); // Append 'i' for ID
-            return $stmt->execute();
+            return $stmt->execute();  // CHANGE: PDO execute without MySQLi's bind_param
         } else {
             // Insert case
             $columns = array_keys($data);
@@ -41,13 +45,17 @@ class BaseModel_roger {
             
             $stmt = $this->conn->prepare($query);
             if ($stmt === false) {
-                throw new Exception("Failed to prepare insert query: " . $this->conn->error);
+                throw new Exception("Failed to prepare insert query.");
             }
 
-            $types = str_repeat('s', count($data)); // Assuming all fields are strings
             $values = array_values($data);
-            $stmt->bind_param($types, ...$values);
-            return $stmt->execute();
+            
+            // PDO binding with positional placeholders
+            foreach ($values as $index => $value) {
+                $stmt->bindValue($index + 1, $value);  // CHANGE: bindValue for each parameter
+            }
+
+            return $stmt->execute();  // CHANGE: PDO execute without MySQLi's bind_param
         }
     }
 
@@ -55,31 +63,30 @@ class BaseModel_roger {
     public function find($id) {
         $query = "SELECT * FROM {$this->table} WHERE {$this->primaryKey} = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('i', $id);
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);  // CHANGE: Using PDO::PARAM_INT
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        return $stmt->fetch(PDO::FETCH_ASSOC);  // CHANGE: fetch() for PDO instead of get_result()->fetch_assoc()
     }
-    
-public function findAll() {
+
+    // Find all records
+    public function findAll() {
         $query = "SELECT * FROM {$this->table}";
-        $result = $this->conn->query($query);
-        return $result->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->query($query);  // CHANGE: PDO query instead of MySQLi query
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // CHANGE: fetchAll() for PDO instead of fetch_all()
     }
+
     // Get all records
     public function all() {
         $query = "SELECT * FROM {$this->table}";
-        return $this->conn->query($query)->fetch_all(MYSQLI_ASSOC);
+        $stmt = $this->conn->query($query);  // CHANGE: PDO query instead of MySQLi query
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // CHANGE: fetchAll() for PDO instead of fetch_all()
     }
 
     // Delete a record by ID
     public function delete($id) {
         $query = "DELETE FROM {$this->table} WHERE {$this->primaryKey} = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param('i', $id);
-        return $stmt->execute();
-        
-        
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);  // CHANGE: Using PDO::PARAM_INT
+        return $stmt->execute();  // CHANGE: PDO execute instead of MySQLi execute
     }
-    
-    
 }

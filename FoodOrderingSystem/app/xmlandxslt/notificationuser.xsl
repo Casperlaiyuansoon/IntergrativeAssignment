@@ -54,23 +54,23 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <!-- <th>ID</th>
                                     <th>Customer ID</th>
-                                    <th>Promotion ID</th>
+                                    <th>Promotion ID</th> -->
                                     <th>Message</th>
-                                    <th>Status</th>
-                                    <th>Created At</th>
+                                    <!-- <th>Status</th> -->
+                                    <!-- <th>Created At</th> -->
                                 </tr>
                             </thead>
                             <tbody>
                                 <xsl:for-each select="/notifications/notification">
                                     <tr>
-                                        <td><xsl:value-of select="id"/></td>
-                                        <td><xsl:value-of select="user_id"/></td>
-                                        <td><xsl:value-of select="promotion_id"/></td>
+                                        <!-- <td><xsl:value-of select="id"/></td> -->
+                                        <!-- <td><xsl:value-of select="user_id"/></td>
+                                        <td><xsl:value-of select="promotion_id"/></td> -->
                                         <td><xsl:value-of select="message"/></td>
-                                        <td><xsl:value-of select="status"/></td>
-                                        <td><xsl:value-of select="created_at"/></td>
+                                        <!-- <td><xsl:value-of select="status"/></td> -->
+                                        <!-- <td><xsl:value-of select="created_at"/></td> -->
                                     </tr>
                                 </xsl:for-each>
                             </tbody>

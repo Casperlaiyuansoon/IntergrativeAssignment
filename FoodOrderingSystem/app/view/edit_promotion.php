@@ -106,7 +106,7 @@ if (isset($_GET['id'])) {
     <?php endif; ?>
 
     <?php if ($promotion): ?>
-        <form method="POST" action="../controllers/PromotionControllers.php">
+        <form method="POST" action="../controller/PromotionControllers.php">
             <input type="hidden" name="id" value="<?php echo $promotion['id']; ?>">
             
             <label for="title">Title:</label>

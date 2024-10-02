@@ -12,61 +12,60 @@ class VoucherModel extends BaseModel_roger {
     }
 
     public function getVoucherAmount($code){
-
         $query = "SELECT * FROM {$this->table} WHERE code = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("s", $code);
+        $stmt->bindValue(1, $code, PDO::PARAM_STR);  // CHANGE: Using PDO bindValue for code
         $stmt->execute();
 
-        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){
-
-            $amount = $row['DISCOUNT_PERCENTAGE'];
+        $amount = null;
+        while($row = $stmt->fetch(PDO::FETCH_ASSOC)){  // CHANGE: Using PDO fetch(PDO::FETCH_ASSOC)
+            $amount = $row['discount_percentage'];  // CHANGE: Corrected to 'discount_percentage'
         }
 
         return $amount;
-
     }
 
     // Fetch voucher details by voucher code
     public function getVoucherByCode($code) {
         $query = "SELECT * FROM {$this->table} WHERE code = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("s", $code);
+        $stmt->bindValue(1, $code, PDO::PARAM_STR);  // CHANGE: Using PDO bindValue for code
         $stmt->execute();
-        return $stmt->get_result()->fetch_assoc();
+        return $stmt->fetch(PDO::FETCH_ASSOC);  // CHANGE: fetch() for PDO
     }
 
     public function incrementVoucherUsage($voucher_id) {
         $query = "UPDATE {$this->table} SET times_used = times_used + 1 WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $voucher_id);
-        $stmt->execute();
+        $stmt->bindValue(1, $voucher_id, PDO::PARAM_INT);  // CHANGE: Using PDO bindValue for voucher_id
+        return $stmt->execute();
     }
 
     // Fetch all vouchers
     public function getAllVouchers() {
         $query = "SELECT * FROM {$this->table}";
-        $result = $this->conn->query($query);
+        $stmt = $this->conn->query($query);  // CHANGE: PDO query instead of MySQLi query
 
-        if ($result === false) {
+        if ($stmt === false) {
             // Handle query error
             return [];
         }
 
-        $vouchers = [];
-        while ($row = $result->fetch_assoc()) {
-            $vouchers[] = $row;
-        }
-
-        return $vouchers;
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);  // CHANGE: fetchAll() for PDO
     }
 
     // Method to update an existing voucher
     public function updateVoucher($id, $data) {
         $query = "UPDATE {$this->table} SET code = ?, promotion_id = ?, expiration_date = ?, discount_percentage = ?, max_uses = ?, times_used = ? WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("siisiii", $data['code'], $data['promotion_id'], $data['expiration_date'], $data['discount_percentage'], $data['max_uses'], $data['times_used'], $id);
-        
+        $stmt->bindValue(1, $data['code'], PDO::PARAM_STR);  // CHANGE: bindValue for each parameter
+        $stmt->bindValue(2, $data['promotion_id'], PDO::PARAM_INT);
+        $stmt->bindValue(3, $data['expiration_date'], PDO::PARAM_STR);
+        $stmt->bindValue(4, $data['discount_percentage'], PDO::PARAM_INT);
+        $stmt->bindValue(5, $data['max_uses'], PDO::PARAM_INT);
+        $stmt->bindValue(6, $data['times_used'], PDO::PARAM_INT);
+        $stmt->bindValue(7, $id, PDO::PARAM_INT);
+
         return $stmt->execute();
     }
 
@@ -74,35 +73,32 @@ class VoucherModel extends BaseModel_roger {
     public function deleteVoucher($id) {
         $query = "DELETE FROM {$this->table} WHERE id = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $id);
-        
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);  // CHANGE: Using PDO bindValue for id
         return $stmt->execute();
     }
     
     // Method to fetch a voucher by its ID
-public function getVoucherById($id) {
-    $query = "SELECT * FROM {$this->table} WHERE id = ?";
-    $stmt = $this->conn->prepare($query);
-    $stmt->bind_param("i", $id);
-    $stmt->execute();
-    return $stmt->get_result()->fetch_assoc();
-}
-
-public function vouchersToXML($vouchers) {
-    $xml = new SimpleXMLElement('<vouchers/>');
-
-    foreach ($vouchers as $voucher) {
-        $voucherNode = $xml->addChild('voucher');
-        $voucherNode->addChild('code', htmlspecialchars($voucher['code']));
-        $voucherNode->addChild('promotion_id', $voucher['promotion_id']);
-        $voucherNode->addChild('expiration_date', $voucher['expiration_date']);
-        $voucherNode->addChild('discount_percentage', $voucher['discount_percentage']);
-        $voucherNode->addChild('max_uses', $voucher['max_uses']);
-        $voucherNode->addChild('times_used', $voucher['times_used']);
+    public function getVoucherById($id) {
+        $query = "SELECT * FROM {$this->table} WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindValue(1, $id, PDO::PARAM_INT);  // CHANGE: Using PDO bindValue for id
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);  // CHANGE: fetch() for PDO
     }
 
-    return $xml->asXML();
-}
+    public function vouchersToXML($vouchers) {
+        $xml = new SimpleXMLElement('<vouchers/>');
 
+        foreach ($vouchers as $voucher) {
+            $voucherNode = $xml->addChild('voucher');
+            $voucherNode->addChild('code', htmlspecialchars($voucher['code']));
+            $voucherNode->addChild('promotion_id', $voucher['promotion_id']);
+            $voucherNode->addChild('expiration_date', $voucher['expiration_date']);
+            $voucherNode->addChild('discount_percentage', $voucher['discount_percentage']);
+            $voucherNode->addChild('max_uses', $voucher['max_uses']);
+            $voucherNode->addChild('times_used', $voucher['times_used']);
+        }
+
+        return $xml->asXML();
+    }
 }
-?>

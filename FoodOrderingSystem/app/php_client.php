@@ -9,12 +9,32 @@ define('API_URL', "http://127.0.0.1:5000/");
 // Function to fetch data from API
 function fetchData($endpoint) {
     $url = API_URL . $endpoint;
-    $response = @file_get_contents($url);
+    $context = stream_context_create([
+        'http' => [
+            'ignore_errors' => true
+        ]
+    ]);
+    $response = file_get_contents($url, false, $context);
     
     if ($response === FALSE) {
-        return ['success' => false, 'message' => 'Failed to fetch data.', 'http_code' => 500];
+        $error = error_get_last();
+        return [
+            'success' => false, 
+            'message' => 'Failed to fetch data: ' . $error['message'], 
+            'http_code' => $http_response_header[0] ?? 'Unknown HTTP code'
+        ];
     }
-    return json_decode($response, true);
+    
+    $data = json_decode($response, true);
+    if (json_last_error() !== JSON_ERROR_NONE) {
+        return [
+            'success' => false,
+            'message' => 'Failed to parse JSON response: ' . json_last_error_msg(),
+            'http_code' => $http_response_header[0] ?? 'Unknown HTTP code'
+        ];
+    }
+    
+    return $data;
 }
 
 // Function to send data to the API
@@ -56,13 +76,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     switch ($action) {
         case 'create':
-            // Validate input
-            if (empty($_POST['customer_id']) || empty($_POST['promotion_id']) || empty($_POST['message'])) {
+            if (empty($_POST['user_id']) || empty($_POST['promotion_id']) || empty($_POST['message'])) {
                 $formMessage = "All fields are required to create a notification.";
             } else {
-                // Sanitize input
                 $newNotification = [
-                    'customer_id' => htmlspecialchars(trim($_POST['customer_id'])),
+                    'user_id' => htmlspecialchars(trim($_POST['user_id'])),
                     'promotion_id' => htmlspecialchars(trim($_POST['promotion_id'])),
                     'message' => htmlspecialchars(trim($_POST['message'])),
                 ];
@@ -72,14 +90,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case 'update':
-            // Validate input
-            if (empty($_POST['id']) || empty($_POST['customer_id']) || empty($_POST['promotion_id']) || empty($_POST['message'])) {
+            if (empty($_POST['id']) || empty($_POST['user_id']) || empty($_POST['promotion_id']) || empty($_POST['message'])) {
                 $formMessage = "All fields are required to update a notification.";
             } else {
-                // Sanitize input
                 $updateNotification = [
                     'id' => htmlspecialchars(trim($_POST['id'])),
-                    'customer_id' => htmlspecialchars(trim($_POST['customer_id'])),
+                    'user_id' => htmlspecialchars(trim($_POST['user_id'])),
                     'promotion_id' => htmlspecialchars(trim($_POST['promotion_id'])),
                     'message' => htmlspecialchars(trim($_POST['message'])),
                     'status' => htmlspecialchars(trim($_POST['status'])),
@@ -90,7 +106,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             break;
 
         case 'delete':
-            // Validate ID
             if (empty($_POST['id'])) {
                 $formMessage = "Notification ID is required to delete a notification.";
             } else {
@@ -113,7 +128,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta charset="UTF-8">
     <title>Notification Management</title>
     <style>
-        /* Basic styling for better user experience */
         body { font-family: Arial, sans-serif; }
         h2 { color: #333; }
         form { margin-top: 20px; }
@@ -151,19 +165,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </p>
     <?php endif; ?>
 
-    <form method="post">
+    <form method="post" onsubmit="return confirmDelete();">
         <h3>Choose an action:</h3>
         <select name="action" onchange="toggleFields()" required>
             <option value="">Select Action</option>
-            <option value="create">Create</option>
-            <option value="update">Update</option>
+            <!-- <option value="create">Create</option> -->
+            <!-- <option value="update">Update</option> -->
             <option value="delete">Delete</option>
         </select>
         <br><br>
 
         <div id="createFields" style="display: none;">
             <h4>Create Notification</h4>
-            Customer ID: <input type="text" name="customer_id"><br>
+            Customer ID: <input type="text" name="user_id"><br>
             Promotion ID: <input type="text" name="promotion_id"><br>
             Message: <input type="text" name="message"><br>
         </div>
@@ -171,7 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div id="updateFields" style="display: none;">
             <h4>Update Notification</h4>
             Notification ID: <input type="text" name="id"><br>
-            Customer ID: <input type="text" name="customer_id"><br>
+            Customer ID: <input type="text" name="user_id"><br>
             Promotion ID: <input type="text" name="promotion_id"><br>
             Message: <input type="text" name="message"><br>
             Status: <input type="text" name="status"><br>
@@ -200,6 +214,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else if (actionSelect.value === 'delete') {
                 document.getElementById('deleteFields').style.display = 'block';
             }
+        }
+
+        function confirmDelete() {
+            const action = document.querySelector('select[name="action"]').value;
+            if (action === 'delete') {
+                const confirmation = confirm("Are you sure you want to delete this notification?");
+                if (!confirmation) {
+                    return false; // Prevent form submission
+                }
+            }
+            return true; // Allow form submission
         }
     </script>
 </body>

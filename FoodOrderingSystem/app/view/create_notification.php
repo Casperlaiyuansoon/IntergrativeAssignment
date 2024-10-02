@@ -2,15 +2,16 @@
 include_once '../models/NotificationModel.php';
 include_once '../commands/CreateNotificationCommand.php';
 include_once '../commands/CommandInvoker.php';
-include_once '../models/DatabaseConnection.php';
+include_once '../config/database.php';
 
-$conn = DatabaseConnection::getInstance();
+$db = new Database();
+$conn = $db->getConnection();
 $notificationModel = new NotificationModel();
 $invoker = new CommandInvoker();
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
-        'customer_id' => $_POST['customer_id'],
+        'user_id' => $_POST['user_id'],
         'promotion_id' => $_POST['promotion_id'],
         'message' => $_POST['message'],
         'status' => 'pending'
@@ -102,8 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <h1>Create Notification</h1>
         <form method="POST" action="create_notification.php">
-            <label for="customer_id">Customer ID:</label>
-            <input type="number" name="customer_id" required><br>
+            <label for="user_id">Customer ID:</label>
+            <input type="number" name="user_id" required><br>
             
             <label for="promotion_id">Promotion ID:</label>
             <input type="number" name="promotion_id" required><br>

@@ -1,8 +1,9 @@
 <?php
 include_once '../models/PromotionModel.php';
-include_once '../models/DatabaseConnection.php';
+include_once '../config/database.php';
 
-$conn = DatabaseConnection::getInstance();
+$db = new Database();
+$conn = $db->getConnection();
 $promotionModel = new PromotionModel();
 $promotions = $promotionModel->getAllPromotions($conn);
 
@@ -231,7 +232,7 @@ usort($sortedArray, function ($a, $b) use ($xpath, $sortBy) {
                     <td><?php echo $xpath->query('end_date', $promotion)->item(0)->nodeValue; ?></td>
                     <td>
                         <a href="edit_promotion.php?id=<?php echo $xpath->query('id', $promotion)->item(0)->nodeValue; ?>">Edit</a>
-                        <form method="POST" action="../controllers/PromotionControllers.php" onsubmit="return confirm('Are you sure you want to delete this promotion?');" style="display:inline;">
+                        <form method="POST" action="../controller/PromotionControllers.php" onsubmit="return confirm('Are you sure you want to delete this promotion?');" style="display:inline;">
                             <input type="hidden" name="id" value="<?php echo $xpath->query('id', $promotion)->item(0)->nodeValue; ?>">
                             <input type="submit" name="delete_promotion" value="Delete" class="delete-btn">
                         </form>

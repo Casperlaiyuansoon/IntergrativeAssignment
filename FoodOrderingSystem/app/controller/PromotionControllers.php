@@ -34,17 +34,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $invoker->setCommand($command)->executeCommand();
             if ($result === true) {
                 regenerateSession(); // Regenerate session ID on critical actions
-                header("Location: ../views/view_promotion.php");
+                header("Location: ../view/view_promotion.php");
                 exit();
             } else {
                 $_SESSION['error'] = $result;
-                header("Location: ../views/add_promotion.php");
+                header("Location: ../view/add_promotion.php");
                 exit();
             }
         } catch (Exception $e) {
             $_SESSION['error'] = 'An error occurred. Please try again later.';
             error_log($e->getMessage()); // Log the error for debugging
-            header("Location: ../views/add_promotion.php");
+            header("Location: ../view/add_promotion.php");
             exit();
         }
     }
@@ -64,17 +64,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $result = $invoker->setCommand($command)->executeCommand();
             if ($result === true) {
                 regenerateSession(); // Regenerate session ID on critical actions
-                header("Location: ../views/view_promotion.php");
+                header("Location: ../view/view_promotion.php");
                 exit();
             } else {
                 $_SESSION['error'] = $result;
-                header("Location: ../views/edit_promotion.php?id={$data['id']}");
+                header("Location: ../view/edit_promotion.php?id={$data['id']}");
                 exit();
             }
         } catch (Exception $e) {
             $_SESSION['error'] = 'An error occurred. Please try again later.';
             error_log($e->getMessage()); // Log the error for debugging
-            header("Location: ../views/edit_promotion.php?id={$data['id']}");
+            header("Location: ../view/edit_promotion.php?id={$data['id']}");
             exit();
         }
     }
@@ -86,12 +86,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $invoker->setCommand($command)->executeCommand();
             regenerateSession(); // Regenerate session ID on critical actions
-            header("Location: ../views/view_promotion.php");
+            header("Location: ../view/view_promotion.php");
             exit();
         } catch (Exception $e) {
             $_SESSION['error'] = 'An error occurred. Please try again later.';
             error_log($e->getMessage()); // Log the error for debugging
-            header("Location: ../views/view_promotion.php");
+            header("Location: ../view/view_promotion.php");
             exit();
         }
     }

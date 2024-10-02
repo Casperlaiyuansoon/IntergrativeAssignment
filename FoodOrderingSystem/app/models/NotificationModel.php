@@ -6,10 +6,9 @@ class NotificationModel extends BaseModel_roger {
     protected $table = 'notifications';
     protected $usertable = 'user';
     
-
     // Create a new notification
     public function createNotification($data) {
-        // Use prepared statements for secure database insertion
+        // Use save method from BaseModel to handle insert
         $notificationId = $this->save($data);
         if ($notificationId) {
             return [
@@ -28,29 +27,61 @@ class NotificationModel extends BaseModel_roger {
 
     // Fetch all notifications for a specific customer
     public function getNotificationsByCustomerId($customerId) {
-        $query = "SELECT * FROM {$this->usertable} WHERE user_id = ?";
-        $stmt = $this->conn->prepare($query);
-        if (!$stmt) {
-            error_log("SQL Prepare Error: " . $this->conn->error); // Log preparation error
+        // First, get the customer details
+        $customerQuery = "SELECT * FROM user WHERE user_id = ?";
+        $customerStmt = $this->conn->prepare($customerQuery);
+        
+        if (!$customerStmt) {
+            error_log("SQL Prepare Error: " . implode(' ', $this->conn->errorInfo()));
             return [
                 'success' => false,
                 'message' => 'Database error'
             ];
         }
-        $stmt->bind_param('i', $customerId);
+    
+        $customerStmt->bindValue(1, $customerId, PDO::PARAM_INT);
+        $customerStmt->execute();
+        
+        $customer = $customerStmt->fetch(PDO::FETCH_ASSOC);
+    
+        if (!$customer) {
+            return [
+                'success' => false,
+                'message' => 'Customer not found'
+            ];
+        }
+    
+        // Now retrieve notifications for this customer using a JOIN between users and notifications tables
+        $query = "SELECT n.id, n.promotion_id, n.message, n.created_at, u.user_id 
+                  FROM notifications n
+                  JOIN user u ON n.user_id = u.user_id
+                  WHERE u.user_id = ?";
+        $stmt = $this->conn->prepare($query);
+        
+        if (!$stmt) {
+            error_log("SQL Prepare Error: " . implode(' ', $this->conn->errorInfo()));
+            return [
+                'success' => false,
+                'message' => 'Database error'
+            ];
+        }
+    
+        $stmt->bindValue(1, $customerId, PDO::PARAM_INT);
         $stmt->execute();
-        $result = $stmt->get_result();
-        $notifications = $result->fetch_all(MYSQLI_ASSOC);
-
+        
+        $notifications = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    
         if ($notifications) {
             return [
                 'success' => true,
+                'customer' => $customer,
                 'notifications' => $notifications
             ];
         } else {
             return [
-                'success' => false,
-                'message' => 'No notifications found for this customer'
+                'success' => true,
+                'customer' => $customer,
+                'notifications' => []
             ];
         }
     }
@@ -91,6 +122,7 @@ class NotificationModel extends BaseModel_roger {
             ];
         }
 
+        // CHANGE: Delete using PDO
         $isDeleted = $this->delete($id);
         if ($isDeleted) {
             return [
@@ -109,7 +141,8 @@ class NotificationModel extends BaseModel_roger {
     // Fetch all notifications
     public function getAllNotifications() {
         try {
-            return $this->findAll(); // Secure retrieval of all notifications
+            // CHANGE: PDO for fetching all notifications
+            return $this->findAll();
         } catch (Exception $e) {
             error_log("Error fetching all notifications: " . $e->getMessage()); // Log errors
             return [

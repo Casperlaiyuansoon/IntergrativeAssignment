@@ -2,7 +2,7 @@
 session_start(); // Start the session at the beginning of the script
 
 include_once '../models/NotificationModel.php';
-include_once '../models/DatabaseConnection.php';
+include_once '../config/database.php';
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -15,7 +15,8 @@ if (!isset($_SESSION['user_id'])) {
 $user_id = $_SESSION['user_id'];
 
 // Create a connection instance
-$conn = DatabaseConnection::getInstance();
+$db = new Database();
+$conn = $db->getConnection();
 $notificationModel = new NotificationModel($conn);
 
 // Get the selected filter status from POST data
@@ -33,10 +34,10 @@ try {
         foreach ($notifications as $notification) {
             $notif = $xml->addChild('notification');
             $notif->addChild('id', $notification['id']);
-            $notif->addChild('customer_id', $notification['customer_id']);
+            $notif->addChild('user_id', $notification['user_id']);
             $notif->addChild('promotion_id', $notification['promotion_id']);
             $notif->addChild('message', $notification['message']);
-            $notif->addChild('status', $notification['status']);
+            // $notif->addChild('status', $notification['status']);
             $notif->addChild('created_at', $notification['created_at']);
         }
         
@@ -45,7 +46,7 @@ try {
         $xml->asXML($xmlFile);
 
         // Load XML and XSL files
-        $xslFile = '../xmlandxslt/notification.xsl';
+        $xslFile = '../xmlandxslt/notificationuser.xsl';
 
         if (!file_exists($xslFile)) {
             die("XSL file not found: $xslFile");
@@ -227,7 +228,7 @@ try {
             <?php echo $html; ?>
         <?php endif; ?>
 
-        <a href="index.php" class="btn">Back to Home</a>
+        <a href="homepage.php" class="btn">Back to Home</a>
     </div>
 </body>
 </html>

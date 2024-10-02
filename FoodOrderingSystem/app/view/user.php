@@ -94,6 +94,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <span class="title">Order</span>
                     </a>
                 </li>
+
+                <li>
+                <a href="view_notification.php">
+    <span class="icon"><ion-icon name="notifications-outline"></ion-icon></span>
+    <span class="title">Notifications</span>
+</a>
+                </li>
+
                 <li>
                     <a href="../controller/adminLogout.php">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
