@@ -30,6 +30,8 @@
             <div class="icon">
                 <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
                 <a href="cart.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="user_profile.php" id="profile-link"><i class="fa-solid fa-user"></i></a>
+                <a href="view_notification_customer.php" id="profile-link"><i class="fa-solid fa-bell"></i></a>
             </div>
 
         </nav>
