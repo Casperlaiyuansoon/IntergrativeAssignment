@@ -93,7 +93,7 @@ $db = $database->getConnection();
     $email = $_SESSION['email'];
     //$email = "zhen@gmail.com";
 
-    $sql2 = "SELECT PAYMENTID, USEREMAIL, TOTALAMOUNT, PAYMENTAMOUNT, PAYMENTMETHOD, PAYMENTTIME FROM PAYMENT WHERE USEREMAIL = '$email' AND PAYMENTSTATUS IS NULL";
+    $sql2 = "SELECT PAYMENTID, USEREMAIL, TOTALAMOUNT, PAYMENTAMOUNT, PAYMENTMETHOD, PAYMENTTIME FROM PAYMENT WHERE USEREMAIL = '$email' ";
     $result2 = $db->query($sql2);
     $result2->execute();
 
