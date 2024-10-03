@@ -91,13 +91,13 @@ $counts = fetchCountsCurl();
             <ul>
                 <li>
                     <a href="#">
-                        <span class="icon"><ion-icon name="../../public/image/logo.png"></ion-icon></span>
+                        <span class="icon"><img src="../../public/image/logo.png"></span>
                         <span class="title">Food Ordering Dashboard</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
+                    <a href="admin/admindashboard.php">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
                         <span class="title">Dashboard</span>
                     </a>
@@ -112,25 +112,36 @@ $counts = fetchCountsCurl();
 
                 <li>
                     <a href="admin/adminmenu.php">
-                        <span class="icon"><ion-icon name="chatbubbles-outline"></ion-icon></span>
+                        <span class="icon"><ion-icon name="fast-food-outline"></ion-icon></span>
                         <span class="title">Menu</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="help-outline"></ion-icon></span>
+                    <a href="admin/adminorder.php">
+                        <span class="icon"><ion-icon name="bag-remove-outline"></ion-icon></span>
                         <span class="title">Order</span>
                     </a>
                 </li>
 
                 <li>
-                <a href="view_notification.php">
-    <span class="icon"><ion-icon name="notifications-outline"></ion-icon></span>
-    <span class="title">Notifications</span>
-</a>
+                    <a href="view_notification.php">
+                        <span class="icon"><ion-icon name="notifications-outline"></ion-icon></span>
+                        <span class="title">Notifications</span>
+                    </a>
                 </li>
-
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="pricetag-outline"></ion-icon></span>
+                        <span class="title">Promotion</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="ticket-outline"></ion-icon></span>
+                        <span class="title">Voucher</span>
+                    </a>
+                </li>
                 <li>
                     <a href="../controller/adminLogout.php">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
@@ -143,15 +154,7 @@ $counts = fetchCountsCurl();
         <div class="main">
             <div class="topbar">
                 <div class="toggle"><ion-icon name="menu-outline"></ion-icon></div>
-                <div class="search">
-                    <form method="POST" action="">
-                        <label>
-                            <input type="text" name="search_user" placeholder="Search Users">
-                            <ion-icon name="search-outline"></ion-icon>
-                        </label>
-                    </form>
-                </div>
-                <div class="user"><img src="image/Customer1.jpeg" alt=""></div>
+                <div class="user"><img src="../../public/image/review_1.png" alt=""></div>
             </div>
 
             <!-- User Management Section -->

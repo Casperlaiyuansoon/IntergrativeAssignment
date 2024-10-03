@@ -205,9 +205,8 @@ if(isset($_POST['payment-complete'])){
                                 <td><?= $order->getOrderQuantity() ?></td>
                                 <td><?= $order->getProductName() ?></td>
                                 <td><?= $order->getPrice() ?></td>
-
-                                <input type="hidden" name="totalPrice" value="<?= $order->getPrice() ?>" />
                             </tr>
+                            <input type="hidden" name="totalPrice" value="<?= $order->getPrice() ?>" />
                         </tbody>
 
                         <?php } ?>

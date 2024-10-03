@@ -83,6 +83,8 @@ $worker = new XSLTTransformation("menu.xml", "menu.xsl");
             <div class="icon">
                 <a href="cart.php"><i class="fa-solid fa-heart"></i></a>
                 <a href="../../view/AddToCartView.php"><i class="fa-solid fa-cart-shopping"></i></a>
+                <a href="../../view/user_profile.php" id="profile-link"><i class="fa-solid fa-user"></i></a>
+                <a href="../../view/view_notification_customer.php" id="profile-link"><i class="fa-solid fa-bell"></i></a>
             </div>
         </nav>
     </section>
