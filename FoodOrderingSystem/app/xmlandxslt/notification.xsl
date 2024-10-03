@@ -46,7 +46,7 @@
             </head>
             <body>
                 <div class="container">
-                    <h1>Filtered Notifications</h1>
+                    <h1>Notifications</h1>
                     <xsl:if test="not(/notifications/notification)">
                         <p>No notifications match the selected filter.</p>
                     </xsl:if>

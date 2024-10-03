@@ -69,6 +69,8 @@ usort($sortedArray, function ($a, $b) use ($xpath, $sortBy) {
     $dateA = $xpath->query($sortBy, $a)->item(0)->nodeValue;
     $dateB = $xpath->query($sortBy, $b)->item(0)->nodeValue;
     return strtotime($dateA) - strtotime($dateB);
+
+    
 });
 ?>
 
@@ -187,6 +189,37 @@ usort($sortedArray, function ($a, $b) use ($xpath, $sortBy) {
         form {
             display: inline;
         }
+        .back-home-btn {
+    display: inline-block;
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.back-home-btn:hover {
+    background-color: #007B9A;
+}
+
+.btn-back {
+    display: inline-block;
+    background-color: #6c757d; /* Grey background */
+    color: #fff; /* White text */
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none; /* Remove underline */
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.btn-back:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+}
     </style>
 </head>
 <body>
@@ -241,5 +274,8 @@ usort($sortedArray, function ($a, $b) use ($xpath, $sortBy) {
             <?php endforeach; ?>
         </tbody>
     </table>
+    <a href="homepage.php" class="back-home-btn">Back to Home</a>
+     <!-- Back Button -->
+     <a href="user.php" class="btn-back">Back</a>
 </body>
 </html>

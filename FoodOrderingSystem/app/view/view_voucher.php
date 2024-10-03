@@ -1,9 +1,10 @@
 <?php
 session_start();
 include_once '../models/VoucherModel.php';
-include_once '../models/DatabaseConnection.php';
+include_once '../config/database.php';
 
-$conn = DatabaseConnection::getInstance();
+$db = new Database();
+$conn = $db->getConnection();
 $voucherModel = new VoucherModel();
 $vouchers = $voucherModel->getAllVouchers($conn);
 
@@ -23,9 +24,7 @@ $proc = new XSLTProcessor();
 $proc->importStylesheet($xsl);
 
 // Transform XML to HTML
-$htmlOutput = $proc->transformToXML($xml);
-?>
-
+$htmlOutput = $proc->transformToXML($xml);?>
 
 
 <!DOCTYPE html>
@@ -113,6 +112,38 @@ $htmlOutput = $proc->transformToXML($xml);
         form {
             display: inline;
         }
+
+        .back-home-btn {
+    display: inline-block;
+    background-color: #008CBA;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+}
+
+.back-home-btn:hover {
+    background-color: #007B9A;
+}
+
+.btn-back {
+    display: inline-block;
+    background-color: #6c757d; /* Grey background */
+    color: #fff; /* White text */
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 4px;
+    text-decoration: none; /* Remove underline */
+    font-size: 16px;
+    margin-top: 10px;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.btn-back:hover {
+    background-color: #5a6268; /* Darker grey on hover */
+}
     </style>
 </head>
 <body>
@@ -143,13 +174,14 @@ $htmlOutput = $proc->transformToXML($xml);
                         <td><?php echo htmlspecialchars($voucher['max_uses']); ?></td>
                         <td><?php echo htmlspecialchars($voucher['times_used']); ?></td>
                         <td>
-                            <form method="POST" action="../controllers/VoucherController.php" style="display:inline;">
+                            <form method="POST" action="../controller/VoucherController.php" style="display:inline;">
                                 <input type="hidden" name="id" value="<?php echo $voucher['id']; ?>">
                                 <input type="submit" name="delete_voucher" value="Delete" class="delete-btn" onclick="return confirm('Are you sure you want to delete this voucher?');">
                             </form>
                             <a href="edit_voucher.php?id=<?php echo $voucher['id']; ?>" class="edit-btn">Edit</a>
                         </td>
                     </tr>
+                    
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
@@ -158,5 +190,8 @@ $htmlOutput = $proc->transformToXML($xml);
             <?php endif; ?>
         </tbody>
     </table>
+    <a href="homepage.php" class="back-home-btn">Back to Home</a>
+     <!-- Back Button -->
+     <a href="user.php" class="btn-back">Back</a>
 </body>
 </html>

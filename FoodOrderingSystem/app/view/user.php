@@ -42,35 +42,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result_admin = $manager->searchAdmins($_POST['search_admin']);
     }
 }
-
-// Fetch count of users and admins
-function fetchCountsCurl()
-{
-    $url = 'http://localhost:3000/api/count';
-    $ch = curl_init($url);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    $response = curl_exec($ch);
-    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    curl_close($ch);
-
-    if ($response === false) {
-        return ['error' => 'Failed to connect to the server: ' . curl_error($ch)];
-    }
-
-    if ($httpCode !== 200) {
-        return ['error' => 'Server returned an error: HTTP ' . $httpCode];
-    }
-
-    $data = json_decode($response, true);
-    if (json_last_error() !== JSON_ERROR_NONE) {
-        return ['error' => 'Failed to parse server response: ' . json_last_error_msg()];
-    }
-
-    return $data;
-}
-
-$counts = fetchCountsCurl();
 ?>
 
 <!DOCTYPE html>
@@ -91,15 +62,15 @@ $counts = fetchCountsCurl();
             <ul>
                 <li>
                     <a href="#">
-                        <span class="icon"><img src="../../public/image/logo.png"></span>
-                        <span class="title">Food Ordering Dashboard</span>
+                           <span class="icon"><img src="../../public/image/logo.png"></span>
+                           <span class="title">Ordering System</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="admin/admindashboard.php">
+                    <a href="#">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">Dashboard</span>
+                        <span class="title">Dashbroad</span>
                     </a>
                 </li>
 
@@ -118,30 +89,31 @@ $counts = fetchCountsCurl();
                 </li>
 
                 <li>
-                    <a href="admin/adminorder.php">
+                    <a href="admin/adminorderhistory.php">
                         <span class="icon"><ion-icon name="bag-remove-outline"></ion-icon></span>
                         <span class="title">Order</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="view_notification.php">
-                        <span class="icon"><ion-icon name="notifications-outline"></ion-icon></span>
-                        <span class="title">Notifications</span>
-                    </a>
+                <a href="view_notification.php">
+    <span class="icon"><ion-icon name="notifications-outline"></ion-icon></span>
+    <span class="title">Notifications</span>
+</a>
                 </li>
                 <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="pricetag-outline"></ion-icon></span>
-                        <span class="title">Promotion</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="ticket-outline"></ion-icon></span>
-                        <span class="title">Voucher</span>
-                    </a>
-                </li>
+    <a href="view_promotion.php">
+        <span class="icon"><ion-icon name="star-outline"></ion-icon></span>
+        <span class="title">Promotions</span>
+    </a>
+</li>
+<li>
+    <a href="view_voucher.php">
+        <span class="icon"><ion-icon name="ticket-outline"></ion-icon></span>
+        <span class="title">Vouchers</span>
+    </a>
+</li>
+
                 <li>
                     <a href="../controller/adminLogout.php">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
@@ -154,6 +126,14 @@ $counts = fetchCountsCurl();
         <div class="main">
             <div class="topbar">
                 <div class="toggle"><ion-icon name="menu-outline"></ion-icon></div>
+                <div class="search">
+                    <form method="POST" action="">
+                        <label>
+                            <input type="text" name="search_user" placeholder="Search Users">
+                            <ion-icon name="search-outline"></ion-icon>
+                        </label>
+                    </form>
+                </div>
                 <div class="user"><img src="../../public/image/review_1.png" alt=""></div>
             </div>
 
@@ -169,16 +149,6 @@ $counts = fetchCountsCurl();
                         <input type="submit" value="Search" class="button">
                     </label>
                 </form>
-
-                <!-- Insert the user count display here -->
-                <?php if (isset($counts['error'])): ?>
-                    <p>Error fetching counts: <?php echo htmlspecialchars($counts['error']); ?></p>
-                <?php else: ?>
-                    <p>Total Users:
-                        <?php echo isset($counts['user_count']) ? htmlspecialchars($counts['user_count']) : 'N/A'; ?>
-                    </p>
-                <?php endif; ?>
-
                 <table>
                     <thead>
                         <tr>
@@ -238,15 +208,6 @@ $counts = fetchCountsCurl();
                         <input type="submit" value="Search" class="button">
                     </label>
                 </form>
-
-                <!-- Insert the admin count display here -->
-                <?php if (isset($counts['error'])): ?>
-                    <p>Error fetching counts: <?php echo htmlspecialchars($counts['error']); ?></p>
-                <?php else: ?>
-                    <p>Total Admins:
-                        <?php echo isset($counts['admin_count']) ? htmlspecialchars($counts['admin_count']) : 'N/A'; ?>
-                    </p>
-                <?php endif; ?>
 
                 <table>
                     <thead>

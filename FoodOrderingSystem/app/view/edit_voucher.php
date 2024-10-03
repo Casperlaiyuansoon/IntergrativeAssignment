@@ -1,11 +1,18 @@
 <?php
 session_start();
 include_once '../models/VoucherModel.php';
-include_once '../models/DatabaseConnection.php';
+include_once '../config/database.php';
 
 // Database connection
-$conn = DatabaseConnection::getInstance();
+$db = new Database();
+$conn = $db->getConnection();
 $voucherModel = new VoucherModel();
+
+
+if (isset($_SESSION['error'])) {
+    echo '<p style="color: red;">' . $_SESSION['error'] . '</p>';
+    unset($_SESSION['error']);
+}
 
 // Fetch the voucher ID from the URL
 if (isset($_GET['id'])) {
@@ -89,7 +96,9 @@ $today = date("Y-m-d");
 <body>
     <h1>Edit Voucher</h1>
 
-    <form method="POST" action="../controllers/VoucherController.php">
+    
+
+    <form method="POST" action="../controller/VoucherController.php">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($voucher['id']); ?>">
 
         <label for="code">Code</label>

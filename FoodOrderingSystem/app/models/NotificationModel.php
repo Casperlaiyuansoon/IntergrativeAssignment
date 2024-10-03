@@ -86,31 +86,25 @@ class NotificationModel extends BaseModel_roger {
         }
     }
 
-    // Update an existing notification
-    public function updateNotification($data) {
-        // Check if data contains necessary keys for update
-        if (!isset($data['id'])) {
-            error_log("Update failed: Missing notification ID"); // Log the error
-            return [
-                'success' => false,
-                'message' => 'Notification ID is required for update'
-            ];
-        }
-
-        $isUpdated = $this->save($data);
-        if ($isUpdated) {
-            return [
-                'success' => true,
-                'message' => 'Notification updated successfully'
-            ];
-        } else {
-            error_log("Failed to update notification: " . json_encode($data)); // Log failure for debugging
-            return [
-                'success' => false,
-                'message' => 'Failed to update notification'
-            ];
-        }
+    public function getNotificationById($id) {
+        $query = "SELECT * FROM notifications WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id);
+        $stmt->execute();
+        
+        return $stmt->fetch(PDO::FETCH_ASSOC);  // Return the notification data as an associative array
     }
+
+    // Update an existing notification
+    public function updateNotification($id, $data) {
+        $query = "UPDATE notifications SET message = :message, status = :status WHERE id = :id";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':message', $data['message']);
+        $stmt->bindParam(':status', $data['status']);
+        $stmt->bindParam(':id', $id);
+        return $stmt->execute();
+    }
+    
 
     // Delete a notification by ID
     public function deleteNotification($id) {

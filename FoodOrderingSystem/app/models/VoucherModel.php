@@ -3,7 +3,29 @@ include_once 'BaseModel_roger.php'; // Ensure BaseModel is included
 
 class VoucherModel extends BaseModel_roger {
     protected $table = 'vouchers'; // Set the table name
+    private $table_name = "promotions"; // Set the promotions table name
     protected $primaryKey = 'id';  // Set the primary key field
+
+
+    
+     // Method to get promotion by ID
+     public function getPromotionById($id) {
+        $query = "SELECT * FROM " . $this->table_name . " WHERE id = :id LIMIT 1";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    
+    // Fetch all promotions (useful if needed later)
+    public function getAllPromotions() {
+        $query = "SELECT * FROM " . $this->table_name;
+        $stmt = $this->conn->query($query);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     // Method to create a new voucher
     public function createVoucher($data) {
@@ -26,14 +48,14 @@ class VoucherModel extends BaseModel_roger {
     }
 
     // Fetch voucher details by voucher code
-    public function getVoucherByCode($code) {
+     // Fetch voucher by voucher code
+     public function getVoucherByCode($code) {
         $query = "SELECT * FROM {$this->table} WHERE code = ?";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindValue(1, $code, PDO::PARAM_STR);  // CHANGE: Using PDO bindValue for code
+        $stmt->bindValue(1, $code, PDO::PARAM_STR);
         $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);  // CHANGE: fetch() for PDO
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
-
     public function incrementVoucherUsage($voucher_id) {
         $query = "UPDATE {$this->table} SET times_used = times_used + 1 WHERE id = ?";
         $stmt = $this->conn->prepare($query);
@@ -85,6 +107,16 @@ class VoucherModel extends BaseModel_roger {
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);  // CHANGE: fetch() for PDO
     }
+
+// Method to check if a voucher code already exists, excluding the current voucher
+public function isDuplicateCode($code, $currentId = null) {
+    $query = "SELECT * FROM {$this->table} WHERE code = ? AND id != ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bindValue(1, $code, PDO::PARAM_STR);
+    $stmt->bindValue(2, $currentId, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
     public function vouchersToXML($vouchers) {
         $xml = new SimpleXMLElement('<vouchers/>');

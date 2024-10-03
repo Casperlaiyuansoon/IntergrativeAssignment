@@ -3,11 +3,19 @@ include_once '../models/NotificationModel.php';
 include_once '../commands/CreateNotificationCommand.php';
 include_once '../commands/CommandInvoker.php';
 include_once '../config/database.php';
+include_once '../models/PromotionModel.php'; // Include PromotionModel
 
 $db = new Database();
 $conn = $db->getConnection();
 $notificationModel = new NotificationModel();
 $invoker = new CommandInvoker();
+$promotionModel = new PromotionModel($conn); // Create PromotionModel instance
+
+// Fetch promotions
+$promotions = $promotionModel->getAllPromotions(); // Function to get all promotions
+
+// Initialize error message
+$errorMessage = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = [
@@ -26,7 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "Failed to create notification.";
         }
     } catch (Exception $e) {
-        echo "An error occurred: " . $e->getMessage();
+        // Check for foreign key constraint violation
+        if ($e->getCode() === '23000') { // SQLSTATE code for integrity constraint violation
+            $errorMessage = "Error: Invalid Customer ID. Please ensure the ID exists.";
+        } else {
+            $errorMessage = "An error occurred. Please try again.";
+        }
     }
 }
 ?>
@@ -71,7 +84,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         /* Input and textarea styling */
         input[type="number"],
-        textarea {
+        textarea,
+        select {
             padding: 10px;
             margin-bottom: 15px;
             border: 1px solid #ddd;
@@ -97,17 +111,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         .btn-back:hover {
             background-color: #0056b3;
         }
+
+        /* Styling for error messages */
+        .error-message {
+            color: #dc3545; /* Red color for error messages */
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Create Notification</h1>
+
+        <!-- Display error message if any -->
+        <?php if ($errorMessage): ?>
+            <div class="error-message"><?php echo htmlspecialchars($errorMessage); ?></div>
+        <?php endif; ?>
+
         <form method="POST" action="create_notification.php">
             <label for="user_id">Customer ID:</label>
-            <input type="number" name="user_id" required><br>
+            <input type="number" name="user_id" placeholder="Enter Customer ID" required><br>
             
             <label for="promotion_id">Promotion ID:</label>
-            <input type="number" name="promotion_id" required><br>
+            <select name="promotion_id" required>
+                <option value="">Select Promotion</option>
+                <?php foreach ($promotions as $promotion): ?>
+                    <option value="<?php echo $promotion['id']; ?>"><?php echo htmlspecialchars($promotion['title']); ?></option>
+                <?php endforeach; ?>
+            </select><br>
             
             <label for="message">Message:</label>
             <textarea name="message" required></textarea><br>
