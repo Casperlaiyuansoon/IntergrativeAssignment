@@ -45,26 +45,6 @@
                             <span class="title">Order</span>
                         </a>
                     </li>
-
-                    <li>
-                <a href="../view_notification.php">
-    <span class="icon"><ion-icon name="notifications-outline"></ion-icon></span>
-    <span class="title">Notifications</span>
-</a>
-                </li>
-                <li>
-    <a href="../view_promotion.php">
-        <span class="icon"><ion-icon name="star-outline"></ion-icon></span>
-        <span class="title">Promotions</span>
-    </a>
-</li>
-<li>
-    <a href="../view_voucher.php">
-        <span class="icon"><ion-icon name="ticket-outline"></ion-icon></span>
-        <span class="title">Vouchers</span>
-    </a>
-</li>
-
                     <li>
                         <a href="../../controller/adminLogout.php">
                             <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
@@ -73,7 +53,6 @@
                     </li>
                 </ul>
             </div>
-
 
             <!-- ================================= Main ================================= -->
             <div class="main">
@@ -89,54 +68,6 @@
                     </div>
                     <div class="user">
                         <img src="../../../public/image/review_1.png" alt="">
-                    </div>
-                </div>
-
-
-                <!-- ================================= Cards ================================= -->
-                <div class="cardBox">
-                    <div class="card">
-                        <div>
-                            <div class="numbers">1,504</div>
-                            <div class="cardName">Daily View</div>
-                        </div>
-
-                        <div class="iconBx">
-                            <ion-icon name="eye-outline"></ion-icon>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div>
-                            <div class="numbers">80</div>
-                            <div class="cardName">Sales</div>
-                        </div>
-
-                        <div class="iconBx">
-                            <ion-icon name="cart-outline"></ion-icon>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div>
-                            <div class="numbers">284</div>
-                            <div class="cardName">Comments</div>
-                        </div>
-
-                        <div class="iconBx">
-                            <ion-icon name="chatbubbles-outline"></ion-icon>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div>
-                            <div class="numbers">7,842</div>
-                            <div class="cardName">Earnning</div>
-                        </div>
-
-                        <div class="iconBx">
-                            <ion-icon name="cash-outline"></ion-icon>
-                        </div>
                     </div>
                 </div>
 
@@ -156,7 +87,7 @@
                         $db = $database->getConnection();
 
                         // Fetch orders from the database
-                        $query = "SELECT o.id,om.ORDERID, om.UserEmail,om.OrderAmount, om.OrderCreation,om.OrderAmount,om.OrderStatus FROM orders o, ordermain om";
+                        $query = "SELECT o.id, om.ORDERID, om.UserEmail, om.OrderAmount, om.OrderCreation, om.OrderStatus FROM orders o, ordermain om";
                         $result = $db->prepare($query);
                         $result->execute();
 
@@ -177,11 +108,10 @@
 
                         <?php
 
-                        //XSLT Process
+                        // XSLT Process
                         class XSLTTransformation {
 
                             public function __construct($xmlfilename, $xslfilename) {
-
                                 $xml = new DOMDocument();
                                 $xml->load($xmlfilename);
 
@@ -199,13 +129,44 @@
                         $worker = new XSLTTransformation("adminorder.xml", "adminorder.xsl");
                         ?>
 
-
                         <!-- =============== Scripts =============== -->
                         <script src="../../../public/js/adminmenu.js"></script>
 
                         <!-- =============== ionicons =============== -->
                         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
                         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-                        </body>
-                        </html>
 
+                        <script>
+                                function filterTable() {
+                                    const input = document.getElementById('searchInput');
+                                    const filter = input.value.toLowerCase();
+                                    const table = document.querySelector('table');
+                                    const tr = table.getElementsByTagName('tr');
+
+                                    // Loop through all table rows (except the first, which is the header)
+                                    for (let i = 1; i < tr.length; i++) {
+                                        const td = tr[i].getElementsByTagName('td');
+                                        let rowVisible = false;
+
+                                        // Loop through all cells in the row
+                                        for (let j = 0; j < td.length; j++) {
+                                            if (td[j]) {
+                                                const txtValue = td[j].textContent || td[j].innerText;
+                                                if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                                                    rowVisible = true;
+                                                    break; // No need to check other cells
+                                                }
+                                            }
+                                        }
+
+                                        // Show or hide the row based on the search input
+                                        tr[i].style.display = rowVisible ? '' : 'none';
+                                    }
+                                }
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

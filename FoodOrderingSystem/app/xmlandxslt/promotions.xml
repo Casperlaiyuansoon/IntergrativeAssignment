@@ -17,35 +17,19 @@
     <end_date>2024-10-31</end_date>
   </promotion>
   <promotion>
+    <id>41</id>
+    <title>roger</title>
+    <description>roger</description>
+    <discount_percentage>10.00</discount_percentage>
+    <start_date>2024-09-23</start_date>
+    <end_date>2024-09-24</end_date>
+  </promotion>
+  <promotion>
     <id>42</id>
     <title>213</title>
     <description>123</description>
     <discount_percentage>10.00</discount_percentage>
     <start_date>2024-10-16</start_date>
     <end_date>2024-10-17</end_date>
-  </promotion>
-  <promotion>
-    <id>44</id>
-    <title>hello</title>
-    <description>hello</description>
-    <discount_percentage>20.00</discount_percentage>
-    <start_date>2024-10-12</start_date>
-    <end_date>2024-10-12</end_date>
-  </promotion>
-  <promotion>
-    <id>45</id>
-    <title>test</title>
-    <description>test123</description>
-    <discount_percentage>10.00</discount_percentage>
-    <start_date>2024-10-04</start_date>
-    <end_date>2024-10-05</end_date>
-  </promotion>
-  <promotion>
-    <id>46</id>
-    <title>test2</title>
-    <description>test2</description>
-    <discount_percentage>10.00</discount_percentage>
-    <start_date>2024-10-31</start_date>
-    <end_date>2024-11-21</end_date>
   </promotion>
 </promotions>

@@ -54,26 +54,6 @@ $foodItems = $food->read()->fetchAll(PDO::FETCH_ASSOC);
                             <span class="title">Order</span>
                         </a>
                     </li>
-
-                    <li>
-                <a href="../view_notification.php">
-    <span class="icon"><ion-icon name="notifications-outline"></ion-icon></span>
-    <span class="title">Notifications</span>
-</a>
-                </li>
-                <li>
-    <a href="../view_promotion.php">
-        <span class="icon"><ion-icon name="star-outline"></ion-icon></span>
-        <span class="title">Promotions</span>
-    </a>
-</li>
-<li>
-    <a href="../view_voucher.php">
-        <span class="icon"><ion-icon name="ticket-outline"></ion-icon></span>
-        <span class="title">Vouchers</span>
-    </a>
-</li>
-
                     <li>
                         <a href="../../controller/adminLogout.php">
                             <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>

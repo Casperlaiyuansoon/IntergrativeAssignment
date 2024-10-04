@@ -1,3 +1,34 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="menu.xsl"?>
-<orders><order id="1"><name>Lagsana</name><price>10.00</price><image>image/lasagna.webp</image></order><order id="2"><name>Pasta</name><price>12.00</price><image>image/pasta.jpg</image></order></orders>
+<orders>
+    <order id="28">
+        <name>Pizza</name>
+        <price>8.00</price>
+        <image>uploads/pizza.jpg</image>
+    </order>
+    <order id="30">
+        <name>Hot dog</name>
+        <price>7.00</price>
+        <image>uploads/Hot_dog.jpg</image>
+    </order>
+    <order id="31">
+        <name>Chocolate Drink</name>
+        <price>5.00</price>
+        <image>uploads/chocolate_Drink.jpg</image>
+    </order>
+    <order id="32">
+        <name>Salmon</name>
+        <price>15.00</price>
+        <image>uploads/salmonsteak.jpg</image>
+    </order>
+    <order id="33">
+        <name>Paste</name>
+        <price>9.00</price>
+        <image>uploads/pasta.jpg</image>
+    </order>
+    <order id="40">
+        <name>Ice Cream</name>
+        <price>4.00</price>
+        <image>uploads/ice_cream.jpg</image>
+    </order>
+</orders>
